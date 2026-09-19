@@ -3966,22 +3966,28 @@ const lf=document.getElementById("login-form");
 if(lf)lf.addEventListener("submit",async e=>{e.preventDefault();e.stopImmediatePropagation();
  const phone=phoneOf(document.getElementById("login-phone").value),password=document.getElementById("login-password").value;
  if(!phone||!password){notify("Gagal Masuk","Nomor HP dan Kata Sandi wajib diisi.","fa-solid fa-circle-xmark text-rose-600");return;}
+ let c;
  try{
-   const c=await signInWithEmailAndPassword(auth,emailOf(phone),password);
+   c=await signInWithEmailAndPassword(auth,emailOf(phone),password);
+ }catch(err){
+   console.error("Tokoinoya Firebase login:",err);
+   let msg="Nomor HP atau Kata Sandi yang Anda masukkan salah.";
+   if(err.code==="auth/too-many-requests")msg="Terlalu banyak percobaan login. Coba lagi beberapa saat lagi.";
+   notify("Gagal Masuk",msg,"fa-solid fa-circle-xmark text-rose-600");
+   return;
+ }
+ try{
    let u={name:c.user.displayName||"",phone,email:c.user.email,photo:""};
    const s=await getDoc(uref(c.user.uid));
    if(s.exists())u={...u,...s.data()};
    localSession({...u,uid:c.user.uid,phone:phoneOf(u.phone||phone),email:c.user.email});
    await hydrate(c.user.uid);
-   checkAuth();openDashboardAfterLogin();lf.reset();notify("Masuk Berhasil",`Selamat datang kembali, ${currentSessionUser.name||nameFromPhone(phone)}!`);
  }catch(err){
-   console.error("Tokoinoya Firebase login:",err);
-   let msg="Nomor HP atau Kata Sandi yang Anda masukkan salah.";
-   if(err.code==="auth/user-not-found"||err.code==="auth/invalid-credential")msg="Akun tidak ditemukan di Firebase Tokoinoya atau data login salah.";
-   else if(err.code==="auth/wrong-password")msg="Nomor HP atau Kata Sandi yang Anda masukkan salah.";
-   else if(err.code==="auth/too-many-requests")msg="Terlalu banyak percobaan login. Coba lagi beberapa saat lagi.";
-   notify("Gagal Masuk",msg,"fa-solid fa-circle-xmark text-rose-600");
+   console.error("Tokoinoya Firebase login data:",err);
+   // Login Firebase sudah berhasil; kegagalan memuat profil/data tidak boleh
+   // dianggap sebagai nomor HP atau kata sandi yang salah.
  }
+ checkAuth();openDashboardAfterLogin();lf.reset();notify("Masuk Berhasil",`Selamat datang kembali, ${currentSessionUser?.name||nameFromPhone(phone)}!`);
 },true);
 
 // Logout now signs out from Firebase Auth.
