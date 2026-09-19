@@ -1773,7 +1773,28 @@ main:has(#view-kasir:not(.hidden)) #view-kasir .kasir-shell{flex:1 1 auto!import
 
             localStorage.setItem(`finance_backup_desktop_${currentSessionUser.phone}`, JSON.stringify(backupOtomatisData));
         }
-function checkAuth() {
+function restoreCachedSession() {
+            try {
+                const cached = safe(localStorage.getItem("finance_active_session"), null);
+                if (cached && cached.uid && (cached.phone || cached.email)) {
+                    currentSessionUser = {
+                        uid: cached.uid,
+                        name: cached.name || "",
+                        phone: phoneOf(cached.phone || ""),
+                        photo: cached.photo || "",
+                        email: cached.email || ""
+                    };
+                    return true;
+                }
+            } catch (e) {
+                console.warn("Tokoinoya cached session:", e);
+            }
+            return false;
+        }
+
+        restoreCachedSession();
+
+        function checkAuth() {
             const authContainer = document.getElementById('auth-container');
             if (currentSessionUser || window.__tokoinoyaLandingHandoffActive) {
                 // Saat datang dari Landing Page, jangan tampilkan login bawaan aplikasi
@@ -3744,12 +3765,12 @@ const views = ['input', 'pengeluaran', 'kasbon', 'kasir', 'produk-kasir', 'lapor
 <!-- TOKOINOYA: FIREBASE FULL INTEGRATION -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updatePassword, updateProfile } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+import { getAuth, setPersistence, browserLocalPersistence, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updatePassword, updateProfile } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc, collection, query, where, getDocs, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
 
 const firebaseConfig={apiKey:"AIzaSyBz_dr3hKSFWdj1AO2zrc3-XWNCiKUQoV8",authDomain:"tokoinoya.firebaseapp.com",databaseURL:"https://tokoinoya-default-rtdb.asia-southeast1.firebasedatabase.app",projectId:"tokoinoya",storageBucket:"tokoinoya.firebasestorage.app",messagingSenderId:"280150644008",appId:"1:280150644008:web:e59ee7f2eda5e6afdd2c1d",measurementId:"G-50SYJFE941"};
-const app=initializeApp(firebaseConfig), auth=getAuth(app), db=getFirestore(app), storage=getStorage(app);
+const app=initializeApp(firebaseConfig), auth=getAuth(app), db=getFirestore(app), storage=getStorage(app);\nconst authPersistenceReady=setPersistence(auth,browserLocalPersistence).catch(e=>{console.warn("Tokoinoya Firebase Auth persistence:",e);});
 window.TokoinoyaFirebase={app,auth,db,storage,ready:false,uid:null,unsubscribe:null};
 const USERS="tokoinoya_users", DATA="tokoinoya_data", MAX=850000;
 const phoneOf=v=>String(v||"").replace(/\D/g,"");
@@ -4313,21 +4334,16 @@ async function consumeLandingLogin(){
 const landingHandoffPromise=consumeLandingLogin();
 
 onAuthStateChanged(auth,async u=>{
+  await authPersistenceReady;
   await landingHandoffPromise;
   window.TokoinoyaFirebase.ready=true;
   window.TokoinoyaFirebase.uid=u?.uid||null;
   if(!u){
     if(dataUnsub)dataUnsub();
     if(userUnsub)userUnsub();
-    /*
-     * PATCH FOKUS RELOAD:
-     * Jangan langsung menghapus sesi lokal pada callback Firebase "null".
-     * Firebase dapat mengirim state awal sebelum sesi persisten selesai dipulihkan.
-     * Jika cache sesi masih ada, pertahankan dashboard agar login tidak muncul
-     * sesaat setelah reload. Logout tetap menghapus cache secara eksplisit.
-     */
+    /* Sesi lokal hanya dihapus oleh proses Logout yang disengaja. */
     if(!currentSessionUser){
-      nativeRemove.call(localStorage,"finance_active_session");
+      restoreCachedSession();
     }
     window.__tokoinoyaLandingHandoffActive=false;
     checkAuth();
