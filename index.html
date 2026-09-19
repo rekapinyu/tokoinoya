@@ -71,64 +71,7 @@
         }
       }
     </style>
-<!-- PATCH LOGIN: desktop full-screen seperti banner referensi, tanpa mengubah markup/event form. -->
-<style>
-            @media (min-width:768px){
-                #auth-container{
-                    align-items:stretch!important;
-                    justify-content:flex-start!important;
-                    padding:0!important;
-                    overflow:hidden!important;
-                    background:#f8fafc url('https://github.com/rekapinyu/tokoinoya/raw/refs/heads/main/BANNER%20TOKO%20INOYA.PNG') right center / auto 100% no-repeat!important;
-                }
-                #auth-container::after{
-                    content:"";
-                    position:absolute;
-                    inset:0 0 0 45%!important;
-                    background:linear-gradient(90deg,rgba(248,250,252,.12),rgba(15,23,42,.08));
-                    pointer-events:none;
-                }
-                #login-card,#register-card{
-                    position:relative!important;
-                    z-index:1!important;
-                    display:flex;
-                    flex-direction:column;
-                    justify-content:center;
-                    align-items:center!important;
-                    width:45%!important;
-                    min-width:0!important;
-                    max-width:none!important;
-                    height:100vh!important;
-                    margin:0!important;
-                    padding:clamp(2.5rem,6vw,6rem) clamp(2rem,5vw,5rem)!important;
-                    border:0!important;
-                    border-radius:0!important;
-                    box-shadow:18px 0 45px rgba(15,23,42,.12)!important;
-                }
-                #login-card > div,
-                #register-card > div{
-                    width:100%!important;
-                    max-width:500px!important;
-                }
-                #login-card form,
-                #register-card form{
-                    width:100%!important;
-                }
-                #login-card.hidden,#register-card.hidden{display:none!important}
-                #login-card h2,#register-card h2{font-size:clamp(1.6rem,2.2vw,2.25rem)!important}
-                #login-card input,#register-card input{
-                    min-height:3.35rem;
-                    background:#f8fafc!important;
-                    border-color:#dbe4ee!important;
-                    border-radius:.85rem!important;
-                }
-                #login-card form button[type="submit"],#register-card form button[type="submit"]{
-                    min-height:3.35rem;
-                    border-radius:.85rem!important;
-                    box-shadow:0 10px 22px rgba(5,150,105,.18)!important;
-                }
-            }
-        </style>
+<!-- PATCH LOGIN: banner dibuat memenuhi frame, form dipersempit; hanya area login/daftar. --> <style id="patch-login-banner-fullframe"> @media (min-width:768px){ #auth-container{position:relative!important;align-items:stretch!important;justify-content:flex-start!important;padding:0!important;overflow:hidden!important;background:#f8fafc url('https://github.com/rekapinyu/tokoinoya/raw/refs/heads/main/BANNER%20TOKO%20INOYA.PNG') center center / cover no-repeat!important;} #auth-container::after{content:"";position:absolute;inset:0!important;background:linear-gradient(90deg,rgba(248,250,252,.96) 0%,rgba(248,250,252,.90) 24%,rgba(248,250,252,.22) 48%,rgba(15,23,42,.05) 100%);pointer-events:none;} #login-card,#register-card{position:relative!important;z-index:1!important;display:flex;flex-direction:column;justify-content:center;align-items:center!important;width:32%!important;min-width:0!important;max-width:430px!important;height:100%!important;margin:0!important;padding:clamp(1.75rem,3vw,3rem)!important;border:0!important;border-radius:0!important;box-shadow:18px 0 45px rgba(15,23,42,.10)!important;} #login-card > div,#register-card > div{width:100%!important;max-width:360px!important;} #login-card form,#register-card form{width:100%!important;} #login-card.hidden,#register-card.hidden{display:none!important} #login-card h2,#register-card h2{font-size:clamp(1.6rem,2.2vw,2.25rem)!important} #login-card input,#register-card input{min-height:3.35rem;background:#f8fafc!important;border-color:#dbe4ee!important;border-radius:.85rem!important;} #login-card form button[type="submit"],#register-card form button[type="submit"]{min-height:3.35rem;border-radius:.85rem!important;box-shadow:0 10px 22px rgba(5,150,105,.18)!important;} } </style>
 
 <style id="tokoinoya-login-text-logo">
 #login-card .toko-inoya-login-title,
