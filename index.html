@@ -1634,8 +1634,9 @@ main:has(#view-kasir:not(.hidden)) #view-kasir .kasir-shell{flex:1 1 auto!import
 </div>
 </div>
 <script>
-        let registeredUsers = JSON.parse(localStorage.getItem('finance_registered_users') || '[]');
-        let currentSessionUser = JSON.parse(localStorage.getItem('finance_active_session') || 'null');
+        let registeredUsers = [];
+        // Private clone: sesi login hanya boleh berasal dari Firebase Auth Tokoinoya.
+        let currentSessionUser = null;
 
         let historyData = [];
         let pengeluaranData = [];
@@ -1803,49 +1804,7 @@ function checkAuth() {
             }
         }
 
-        document.getElementById('register-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const name = document.getElementById('reg-name').value.trim();
-            const phone = document.getElementById('reg-phone').value.trim();
-            const password = document.getElementById('reg-password').value;
-
-            const existingUser = registeredUsers.find(u => u.phone === phone);
-            if (existingUser) {
-                showModal("Gagal Daftar", "Nomor HP sudah terdaftar. Silakan gunakan nomor lain atau langsung masuk.", "fa-solid fa-circle-exclamation text-rose-600");
-                return;
-            }
-
-            const newUser = { name, phone, password, photo: "" };
-            registeredUsers.push(newUser);
-            localStorage.setItem('finance_registered_users', JSON.stringify(registeredUsers));
-
-            localStorage.setItem(`finance_history_desktop_${phone}`, JSON.stringify([]));
-            localStorage.setItem(`finance_pengeluaran_desktop_${phone}`, JSON.stringify([]));
-            localStorage.setItem(`finance_kasbon_desktop_${phone}`, JSON.stringify([]));
-            localStorage.setItem(`finance_backup_desktop_${phone}`, JSON.stringify([]));
-
-            document.getElementById('register-form').reset();
-            toggleAuthView('login');
-            showModal("Pendaftaran Berhasil", "Akun Anda berhasil dibuat. Silakan masuk menggunakan Nomor HP dan Kata Sandi.");
-        });
-
-        document.getElementById('login-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const phone = document.getElementById('login-phone').value.trim();
-            const password = document.getElementById('login-password').value;
-
-            const user = registeredUsers.find(u => u.phone === phone && u.password === password);
-            if (!user) {
-                showModal("Gagal Masuk", "Nomor HP atau Kata Sandi yang Anda masukkan salah. Pastikan data terdaftar dengan benar.", "fa-solid fa-circle-xmark text-rose-600");
-                return;
-            }
-
-            currentSessionUser = user;
-            localStorage.setItem('finance_active_session', JSON.stringify(user));
-            document.getElementById('login-form').reset();
-            checkAuth();
-            showModal("Masuk Berhasil", `Selamat datang kembali, ${user.name}!`);
-        });
+        // Auth lokal lama dinonaktifkan. Pendaftaran dan login ditangani sepenuhnya oleh Firebase Tokoinoya.
 
         function handleLogout() {
             currentSessionUser = null;
@@ -3765,7 +3724,7 @@ const views = ['input', 'pengeluaran', 'kasbon', 'kasir', 'produk-kasir', 'lapor
     }
 })();
 </script>
-<!-- REKAPINYU: FIREBASE FULL INTEGRATION -->
+<!-- TOKOINOYA: FIREBASE FULL INTEGRATION -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updatePassword, updateProfile } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
@@ -3774,7 +3733,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstati
 
 const firebaseConfig={apiKey:"AIzaSyBz_dr3hKSFWdj1AO2zrc3-XWNCiKUQoV8",authDomain:"tokoinoya.firebaseapp.com",databaseURL:"https://tokoinoya-default-rtdb.asia-southeast1.firebasedatabase.app",projectId:"tokoinoya",storageBucket:"tokoinoya.firebasestorage.app",messagingSenderId:"280150644008",appId:"1:280150644008:web:e59ee7f2eda5e6afdd2c1d",measurementId:"G-50SYJFE941"};
 const app=initializeApp(firebaseConfig), auth=getAuth(app), db=getFirestore(app), storage=getStorage(app);
-window.RekapinyuFirebase={app,auth,db,storage,ready:false,uid:null,unsubscribe:null};
+window.TokoinoyaFirebase={app,auth,db,storage,ready:false,uid:null,unsubscribe:null};
 const USERS="tokoinoya_users", DATA="tokoinoya_data", MAX=850000;
 const phoneOf=v=>String(v||"").replace(/\D/g,"");
 const emailOf=p=>`${phoneOf(p)}@tokoinoya.app`;
@@ -3929,18 +3888,18 @@ window.__tokoinoyaSaveCloudData=()=>{
      clearDataPending('backup',safe(localStorage.getItem(`finance_backup_desktop_${phone}`),[]));
    }
  }).catch(err=>{
-   console.warn("Rekapinyu: sinkronisasi Firestore gagal, cache lokal tetap dipertahankan.",err);
+   console.warn("Tokoinoya: sinkronisasi Firestore gagal, cache lokal tetap dipertahankan.",err);
  });
  return cloudSaveChain;
 };
 
-// Data tertentu tetap disinkronkan ke Firebase; Produk Kasir dikelola sepenuhnya di localStorage.
+// Data aplikasi disinkronkan ke Firebase Tokoinoya; Produk Kasir tetap menggunakan penyimpanan lokal sesuai implementasi saat ini.
 if(!Storage.prototype.__tokoinoyaFirebaseFull){
- Storage.prototype.setItem=function(k,v){const r=nativeSet.call(this,k,v);if(this===localStorage&&window.RekapinyuFirebase.ready&&cloudUid()){
+ Storage.prototype.setItem=function(k,v){const r=nativeSet.call(this,k,v);if(this===localStorage&&window.TokoinoyaFirebase.ready&&cloudUid()){
    const p=phoneOf(currentSessionUser?.phone);const watched=[`finance_history_desktop_${p}`,`finance_pengeluaran_desktop_${p}`,`finance_kasbon_desktop_${p}`,`finance_backup_desktop_${p}`,`finance_shop_cover_${p}`,`finance_kasir_transactions_${p}`];
    if(watched.includes(k)){clearTimeout(window.__rfSaveTimer);window.__rfSaveTimer=setTimeout(()=>window.__tokoinoyaSaveCloudData?.(),200)}
  }return r};
- Storage.prototype.removeItem=function(k){const r=nativeRemove.call(this,k);if(this===localStorage&&window.RekapinyuFirebase.ready&&cloudUid()){clearTimeout(window.__rfSaveTimer);window.__rfSaveTimer=setTimeout(()=>window.__tokoinoyaSaveCloudData?.(),100)}return r};
+ Storage.prototype.removeItem=function(k){const r=nativeRemove.call(this,k);if(this===localStorage&&window.TokoinoyaFirebase.ready&&cloudUid()){clearTimeout(window.__rfSaveTimer);window.__rfSaveTimer=setTimeout(()=>window.__tokoinoyaSaveCloudData?.(),100)}return r};
  Storage.prototype.__tokoinoyaFirebaseFull=true;
 }
 
@@ -3960,18 +3919,9 @@ if(rf)rf.addEventListener("submit",async e=>{e.preventDefault();e.stopImmediateP
    const userData={uid:c.user.uid,name,phone,email:c.user.email,photo:""};
    const emptyData={historyData:[],pengeluaranData:[],kasbonData:[],backupOtomatisData:[],shopCover:""};
 
-   // Coba simpan ke Firestore. Jika Rules menolak, akun Auth tetap valid
-   // dan data lokal tetap menjadi fallback sehingga pengguna tetap bisa masuk.
-   try{
-     await setDoc(uref(c.user.uid),{...userData,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});
-     await setDoc(dref(c.user.uid),{...emptyData,updatedAt:serverTimestamp()});
-   }catch(firestoreErr){
-     console.warn("Rekapinyu: Firestore belum mengizinkan penyimpanan awal. Akun Auth tetap dibuat.",firestoreErr);
-   }
-
-   // Simpan cache lokal termasuk password agar akun yang baru dibuat
-   // tetap dapat dipakai jika Firestore belum memiliki permission.
-   nativeSet.call(localStorage,"finance_registered_users",JSON.stringify([{...userData,password}]));
+   // Profil dan seluruh data awal wajib disimpan ke Firestore Tokoinoya.
+   await setDoc(uref(c.user.uid),{...userData,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});
+   await setDoc(dref(c.user.uid),{...emptyData,updatedAt:serverTimestamp()});
    await signOut(auth);
    currentSessionUser=null;
    nativeRemove.call(localStorage,"finance_active_session");
@@ -3979,7 +3929,7 @@ if(rf)rf.addEventListener("submit",async e=>{e.preventDefault();e.stopImmediateP
    toggleAuthView("login");
    notify("Pendaftaran Berhasil","Akun berhasil dibuat. Silakan masuk menggunakan Nomor HP dan Kata Sandi.");
  }catch(err){
-   console.error("Rekapinyu Firebase registration:",err);
+   console.error("Tokoinoya Firebase registration:",err);
    let msg="Pendaftaran gagal. Silakan coba lagi.";
    if(err.code==="auth/email-already-in-use") msg="Nomor HP tersebut sudah terdaftar. Silakan langsung masuk.";
    else if(err.code==="auth/invalid-email") msg="Format nomor HP tidak valid.";
@@ -3990,41 +3940,26 @@ if(rf)rf.addEventListener("submit",async e=>{e.preventDefault();e.stopImmediateP
  }
 },true);
 
-// Firebase login + one-time migration of old localStorage accounts.
+// Firebase login: Tokoinoya Auth is the only authentication source for this private clone.
 const lf=document.getElementById("login-form");
 if(lf)lf.addEventListener("submit",async e=>{e.preventDefault();e.stopImmediatePropagation();
  const phone=phoneOf(document.getElementById("login-phone").value),password=document.getElementById("login-password").value;
+ if(!phone||!password){notify("Gagal Masuk","Nomor HP dan Kata Sandi wajib diisi.","fa-solid fa-circle-xmark text-rose-600");return;}
  try{
-   // Login Auth tetap menjadi sumber autentikasi utama.
    const c=await signInWithEmailAndPassword(auth,emailOf(phone),password);
    let u={name:c.user.displayName||"",phone,email:c.user.email,photo:""};
-   let firestoreAvailable=true;
-   try{
-     const s=await getDoc(uref(c.user.uid));
-     if(s.exists())u={...u,...s.data()};
-   }catch(firestoreErr){
-     firestoreAvailable=false;
-     console.warn("Rekapinyu: profil Firestore belum dapat dibaca. Menggunakan data lokal/Auth.",firestoreErr);
-   }
+   const s=await getDoc(uref(c.user.uid));
+   if(s.exists())u={...u,...s.data()};
    localSession({...u,uid:c.user.uid,phone:phoneOf(u.phone||phone),email:c.user.email});
-   if(firestoreAvailable){
-     try{await hydrate(c.user.uid)}catch(hydrateErr){console.warn("Rekapinyu: data Firestore belum dapat dimuat. Menggunakan cache lokal.",hydrateErr)}
-   }
-    checkAuth();openDashboardAfterLogin();lf.reset();notify("Masuk Berhasil",`Selamat datang kembali, ${currentSessionUser.name||nameFromPhone(phone)}!`);
+   await hydrate(c.user.uid);
+   checkAuth();openDashboardAfterLogin();lf.reset();notify("Masuk Berhasil",`Selamat datang kembali, ${currentSessionUser.name||nameFromPhone(phone)}!`);
  }catch(err){
-   const legacy=registeredUsers.find(x=>phoneOf(x.phone)===phone&&x.password===password);
-   if(!legacy){notify("Gagal Masuk","Nomor HP atau Kata Sandi yang Anda masukkan salah.","fa-solid fa-circle-xmark text-rose-600");return;}
-   try{
-     const c=await createUserWithEmailAndPassword(auth,emailOf(phone),password);await updateProfile(c.user,{displayName:legacy.name||""});
-     try{
-       await setDoc(uref(c.user.uid),{uid:c.user.uid,name:legacy.name||"",phone,email:c.user.email,photo:legacy.photo||"",migratedFromLegacy:true,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});
-       let shop=localStorage.getItem(`finance_shop_cover_${phone}`)||"";if(shop.length>MAX)shop="";
-       await setDoc(dref(c.user.uid),{historyData:safe(localStorage.getItem(`finance_history_desktop_${phone}`),[]),pengeluaranData:safe(localStorage.getItem(`finance_pengeluaran_desktop_${phone}`),[]),kasbonData:safe(localStorage.getItem(`finance_kasbon_desktop_${phone}`),[]),backupOtomatisData:safe(localStorage.getItem(`finance_backup_desktop_${phone}`),[]),shopCover:shop,migratedFromLegacy:true,updatedAt:serverTimestamp()});
-     }catch(migrateCloudErr){console.warn("Rekapinyu: migrasi Firestore ditunda karena Rules.",migrateCloudErr)}
-     localSession({uid:c.user.uid,name:legacy.name||"",phone,photo:legacy.photo||"",email:c.user.email});
-     try{await hydrate(c.user.uid)}catch{}
-    checkAuth();openDashboardAfterLogin();lf.reset();notify("Masuk Berhasil","Akun berhasil masuk. Data lokal tetap digunakan sampai Firebase siap.");
-   }catch(m){console.error(m);notify("Gagal Masuk",m.message||"Akun tidak dapat masuk.","fa-solid fa-circle-xmark text-rose-600")}
+   console.error("Tokoinoya Firebase login:",err);
+   let msg="Nomor HP atau Kata Sandi yang Anda masukkan salah.";
+   if(err.code==="auth/user-not-found"||err.code==="auth/invalid-credential")msg="Akun tidak ditemukan di Firebase Tokoinoya atau data login salah.";
+   else if(err.code==="auth/wrong-password")msg="Nomor HP atau Kata Sandi yang Anda masukkan salah.";
+   else if(err.code==="auth/too-many-requests")msg="Terlalu banyak percobaan login. Coba lagi beberapa saat lagi.";
+   notify("Gagal Masuk",msg,"fa-solid fa-circle-xmark text-rose-600");
  }
 },true);
 
@@ -4289,13 +4224,13 @@ async function consumeLandingLogin(){
     try{
       const s=await getDoc(uref(c.user.uid));
       if(s.exists())u={...u,...s.data()};
-    }catch(e){console.warn("Rekapinyu handoff: profil Firestore belum dapat dibaca.",e)}
+    }catch(e){console.warn("Tokoinoya handoff: profil Firestore belum dapat dibaca.",e)}
     localSession({...u,uid:c.user.uid,phone:phoneOf(u.phone||data.phone),email:c.user.email});
     window.__tokoinoyaLandingHandoffActive = true;
-    try{await hydrate(c.user.uid)}catch(e){console.warn("Rekapinyu handoff: data belum dapat dimuat.",e)}
+    try{await hydrate(c.user.uid)}catch(e){console.warn("Tokoinoya handoff: data belum dapat dimuat.",e)}
     return true;
   }catch(e){
-    console.error("Rekapinyu landing login handoff:",e);
+    console.error("Tokoinoya landing login handoff:",e);
     window.__tokoinoyaLandingHandoffActive = false;
     try{history.replaceState(null,document.title,window.location.pathname+window.location.search)}catch{}
     notify("Login Gagal","Sesi dari Landing Page tidak dapat diproses. Silakan login kembali melalui aplikasi.","fa-solid fa-circle-xmark text-rose-600");
@@ -4306,8 +4241,8 @@ const landingHandoffPromise=consumeLandingLogin();
 
 onAuthStateChanged(auth,async u=>{
   await landingHandoffPromise;
-  window.RekapinyuFirebase.ready=true;
-  window.RekapinyuFirebase.uid=u?.uid||null;
+  window.TokoinoyaFirebase.ready=true;
+  window.TokoinoyaFirebase.uid=u?.uid||null;
   if(!u){
     if(dataUnsub)dataUnsub();
     if(userUnsub)userUnsub();
