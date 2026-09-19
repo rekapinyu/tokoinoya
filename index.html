@@ -71,98 +71,52 @@
         }
       }
     </style>
-<!-- PATCH LOGIN: banner dibuat memenuhi frame, form dipersempit; hanya area login/daftar. --> <style id="patch-login-banner-fullframe"> @media (min-width:768px){ #auth-container{position:relative!important;align-items:stretch!important;justify-content:flex-start!important;padding:0!important;overflow:hidden!important;background:#f8fafc url('https://github.com/rekapinyu/tokoinoya/raw/refs/heads/main/BANNER%20TOKO%20INOYA.PNG') center center / cover no-repeat!important;} #auth-container::after{content:"";position:absolute;inset:0!important;background:linear-gradient(90deg,rgba(248,250,252,.96) 0%,rgba(248,250,252,.90) 24%,rgba(248,250,252,.22) 48%,rgba(15,23,42,.05) 100%);pointer-events:none;} #login-card,#register-card{position:relative!important;z-index:1!important;display:flex;flex-direction:column;justify-content:center;align-items:center!important;width:32%!important;min-width:0!important;max-width:430px!important;height:100%!important;margin:0!important;padding:clamp(1.75rem,3vw,3rem)!important;border:0!important;border-radius:0!important;box-shadow:18px 0 45px rgba(15,23,42,.10)!important;} #login-card > div,#register-card > div{width:100%!important;max-width:360px!important;} #login-card form,#register-card form{width:100%!important;} #login-card.hidden,#register-card.hidden{display:none!important} #login-card h2,#register-card h2{font-size:clamp(1.6rem,2.2vw,2.25rem)!important} #login-card input,#register-card input{min-height:3.35rem;background:#f8fafc!important;border-color:#dbe4ee!important;border-radius:.85rem!important;} #login-card form button[type="submit"],#register-card form button[type="submit"]{min-height:3.35rem;border-radius:.85rem!important;box-shadow:0 10px 22px rgba(5,150,105,.18)!important;} } </style>
-
-<style id="tokoinoya-login-text-logo">
-#login-card .toko-inoya-login-title,
-#register-card .toko-inoya-login-title{
-  display:block!important;
-  color:#16a085!important;
-  font-size:32px!important;
-  line-height:1.1!important;
-  font-weight:900!important;
-  letter-spacing:.04em!important;
-  margin:0 0 9px 0!important;
+<!-- PATCH LOGIN BANNER + FORM: versi baru tunggal. Perbaikan banner/form lama di area ini dihapus dan diganti di sini saja. -->
+<style id="tokoinoya-login-banner-form-final">
+@media (min-width:768px){
+  #auth-container{
+    position:relative!important;
+    width:100%!important;
+    min-height:100vh!important;
+    padding:0!important;
+    overflow:hidden!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    background-image:url('https://github.com/rekapinyu/tokoinoya/raw/refs/heads/main/BANNER%20TOKO%20INOYA.PNG')!important;
+    background-size:cover!important;
+    background-position:center center!important;
+    background-repeat:no-repeat!important;
+  }
+  #login-card,#register-card{
+    position:relative!important;
+    z-index:2!important;
+    width:360px!important;
+    max-width:360px!important;
+    min-width:0!important;
+    max-height:calc(100vh - 48px)!important;
+    margin:24px 0 24px 6vw!important;
+    padding:28px 30px!important;
+    border-radius:18px!important;
+    box-shadow:0 18px 45px rgba(15,23,42,.18)!important;
+    box-sizing:border-box!important;
+  }
+  #login-card > div,#register-card > div,
+  #login-card form,#register-card form{
+    width:100%!important;
+    max-width:100%!important;
+  }
+  #login-card.hidden,#register-card.hidden{display:none!important}
 }
-@media(max-width:767px){
-  #login-card .toko-inoya-login-title,
-  #register-card .toko-inoya-login-title{font-size:26px!important;}
+@media (max-width:767px){
+  #auth-container{
+    background-image:url('https://github.com/rekapinyu/tokoinoya/raw/refs/heads/main/BANNER%20TOKO%20INOYA.PNG')!important;
+    background-size:cover!important;
+    background-position:center center!important;
+    background-repeat:no-repeat!important;
+  }
 }
 </style>
-<!-- PATCH MINIMAL: rapikan logo + tagline login/daftar, desktop & mobile -->
-<style>
-      @media (min-width:768px){
-        #login-card .login-brand-header,
-        #register-card .login-brand-header{
-          width:100%!important;
-          display:flex!important;
-          flex-direction:column!important;
-          align-items:flex-start!important;
-          justify-content:center!important;
-          text-align:left!important;
-          margin-left:0!important;
-          margin-right:auto!important;
-        }
-        #login-card .login-brand-logo,
-        #register-card .login-brand-logo{
-          display:block!important;
-          width:min(100%, 320px)!important;
-          max-width:320px!important;
-          height:auto!important;
-          max-height:82px!important;
-          object-fit:contain!important;
-          object-position:center!important;
-          margin:0 0 9px 0!important;
-        }
-        #login-card .login-brand-tagline,
-        #register-card .login-brand-tagline{
-          display:block!important;
-          width:min(100%, 285px)!important;
-          max-width:285px!important;
-          margin:0 0 0 0!important;
-          padding:0!important;
-          color:#94a3b8!important;
-          font-size:11px!important;
-          line-height:1.45!important;
-          font-weight:500!important;
-          text-align:left!important;
-        }
-      }
-      @media (max-width:767px){
-        #login-card .login-brand-header,
-        #register-card .login-brand-header{
-          align-items:center!important;
-          text-align:center!important;
-        }
-        #login-card .login-brand-logo,
-        #register-card .login-brand-logo{
-          width:min(100%, 245px)!important;
-          max-width:245px!important;
-          max-height:64px!important;
-          margin:0 auto 8px!important;
-        }
-        #login-card .login-brand-tagline,
-        #register-card .login-brand-tagline{
-          width:min(100%, 225px)!important;
-          max-width:225px!important;
-          margin:0 auto!important;
-          font-size:10px!important;
-          line-height:1.4!important;
-          text-align:center!important;
-        }
-      }
-    </style>
-<!-- PATCH MINIMAL: koreksi posisi Photo Banner hanya saat dibuka langsung di browser desktop.
-         Mode installed/standalone dibiarkan memakai tampilan original yang sudah benar. -->
-<style>
-      @media (min-width:768px) and (display-mode: browser){
-        #auth-container{
-          background-position:right center!important;
-          background-size:55vw auto!important;
-          background-repeat:no-repeat!important;
-        }
-      }
-    </style>
 <!-- PATCH STYLE REFERENSI: hanya tampilan visual dashboard.
          Menu, ID, event, fungsi, data, dan logika aplikasi tidak diubah. -->
 <style id="tokoinoya-reference-design">
