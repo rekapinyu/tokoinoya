@@ -72,23 +72,20 @@
       }
     </style>
 <!-- PATCH LOGIN: desktop full-screen seperti banner referensi, tanpa mengubah markup/event form. -->
-<style id="tokoinoya-login-register-banner-final">
+<style>
             @media (min-width:768px){
                 #auth-container{
-                    position:relative!important;
-                    width:100%!important;
-                    min-height:100vh!important;
-                    align-items:center!important;
+                    align-items:stretch!important;
                     justify-content:flex-start!important;
                     padding:0!important;
                     overflow:hidden!important;
-                    background:#f8fafc url('https://github.com/rekapinyu/tokoinoya/raw/refs/heads/main/BANNER%20TOKO%20INOYA.PNG') center center / cover no-repeat!important;
+                    background:#f8fafc url('https://github.com/rekapinyu/tokoinoya/raw/refs/heads/main/BANNER%20TOKO%20INOYA.PNG') right center / auto 100% no-repeat!important;
                 }
                 #auth-container::after{
                     content:"";
                     position:absolute;
-                    inset:0!important;
-                    background:rgba(15,23,42,.05);
+                    inset:0 0 0 45%!important;
+                    background:linear-gradient(90deg,rgba(248,250,252,.12),rgba(15,23,42,.08));
                     pointer-events:none;
                 }
                 #login-card,#register-card{
@@ -98,27 +95,24 @@
                     flex-direction:column;
                     justify-content:center;
                     align-items:center!important;
-                    width:360px!important;
-                    min-width:360px!important;
-                    max-width:360px!important;
-                    height:auto!important;
-                    max-height:calc(100vh - 40px)!important;
-                    margin:20px 0 20px 6vw!important;
-                    padding:30px 28px!important;
-                    box-sizing:border-box!important;
+                    width:45%!important;
+                    min-width:0!important;
+                    max-width:none!important;
+                    height:100vh!important;
+                    margin:0!important;
+                    padding:clamp(2.5rem,6vw,6rem) clamp(2rem,5vw,5rem)!important;
                     border:0!important;
-                    border-radius:18px!important;
-                    box-shadow:0 18px 45px rgba(15,23,42,.18)!important;
+                    border-radius:0!important;
+                    box-shadow:18px 0 45px rgba(15,23,42,.12)!important;
                 }
                 #login-card > div,
                 #register-card > div{
                     width:100%!important;
-                    max-width:100%!important;
+                    max-width:500px!important;
                 }
                 #login-card form,
                 #register-card form{
                     width:100%!important;
-                    max-width:100%!important;
                 }
                 #login-card.hidden,#register-card.hidden{display:none!important}
                 #login-card h2,#register-card h2{font-size:clamp(1.6rem,2.2vw,2.25rem)!important}
@@ -134,33 +128,11 @@
                     box-shadow:0 10px 22px rgba(5,150,105,.18)!important;
                 }
             }
-            @media (max-width:767px){
-                #auth-container{
-                    position:relative!important;
-                    min-height:100vh!important;
-                    background:#f8fafc url('https://github.com/rekapinyu/tokoinoya/raw/refs/heads/main/BANNER%20TOKO%20INOYA.PNG') center center / cover no-repeat!important;
-                }
-                #auth-container::after{
-                    content:"";
-                    position:absolute;
-                    inset:0!important;
-                    background:rgba(15,23,42,.05);
-                    pointer-events:none;
-                }
-                #login-card,#register-card{
-                    position:relative!important;
-                    z-index:1!important;
-                    width:calc(100% - 32px)!important;
-                    max-width:360px!important;
-                    margin:16px auto!important;
-                    box-sizing:border-box!important;
-                    border-radius:18px!important;
-                }
-            }
         </style>
 
 <style id="tokoinoya-login-text-logo">
-#login-card .toko-inoya-login-title{
+#login-card .toko-inoya-login-title,
+#register-card .toko-inoya-login-title{
   display:block!important;
   color:#16a085!important;
   font-size:32px!important;
@@ -170,7 +142,8 @@
   margin:0 0 9px 0!important;
 }
 @media(max-width:767px){
-  #login-card .toko-inoya-login-title{font-size:26px!important;}
+  #login-card .toko-inoya-login-title,
+  #register-card .toko-inoya-login-title{font-size:26px!important;}
 }
 </style>
 <!-- PATCH MINIMAL: rapikan logo + tagline login/daftar, desktop & mobile -->
@@ -238,6 +211,15 @@
     </style>
 <!-- PATCH MINIMAL: koreksi posisi Photo Banner hanya saat dibuka langsung di browser desktop.
          Mode installed/standalone dibiarkan memakai tampilan original yang sudah benar. -->
+<style>
+      @media (min-width:768px) and (display-mode: browser){
+        #auth-container{
+          background-position:right center!important;
+          background-size:55vw auto!important;
+          background-repeat:no-repeat!important;
+        }
+      }
+    </style>
 <!-- PATCH STYLE REFERENSI: hanya tampilan visual dashboard.
          Menu, ID, event, fungsi, data, dan logika aplikasi tidak diubah. -->
 <style id="tokoinoya-reference-design">
@@ -1004,7 +986,7 @@ main:has(#view-kasir:not(.hidden)) #view-kasir .kasir-shell{flex:1 1 auto!import
 <!-- CARD REGISTER -->
 <div class="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl border border-slate-100 hidden transition-all" id="register-card">
 <div class="text-center mb-6 login-brand-header">
-<img alt="REKAPINYU" class="login-brand-logo" src="https://github.com/tokoinoya/tokoinoya.github.io/blob/main/LogoRekpinyuBiru.jpg?raw=true"/>
+<div class="toko-inoya-login-title">TOKO INOYA</div>
 <p class="login-brand-tagline">Kelola Keuangan Anda Dengan Mudah</p>
 </div>
 <form class="space-y-4" id="register-form">
@@ -3954,14 +3936,13 @@ if(rf)rf.addEventListener("submit",async e=>{e.preventDefault();e.stopImmediateP
    const userData={uid:c.user.uid,name,phone,email:c.user.email,photo:""};
    const emptyData={historyData:[],pengeluaranData:[],kasbonData:[],backupOtomatisData:[],shopCover:""};
 
-   // Firestore tetap dicoba, tetapi penolakan Rules tidak boleh membatalkan akun Auth.
+   // Firestore tidak boleh membuat proses pendaftaran dianggap gagal jika Rules belum mengizinkan penulisan awal.
    try{
      await setDoc(uref(c.user.uid),{...userData,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});
      await setDoc(dref(c.user.uid),{...emptyData,updatedAt:serverTimestamp()});
    }catch(firestoreErr){
-     console.warn("Tokoinoya: penyimpanan awal Firestore ditolak; akun Auth tetap dibuat.",firestoreErr);
+     console.warn("Tokoinoya Firebase registration Firestore:",firestoreErr);
    }
-   nativeSet.call(localStorage,"finance_registered_users",JSON.stringify([{...userData,password}]));
    await signOut(auth);
    currentSessionUser=null;
    nativeRemove.call(localStorage,"finance_active_session");
@@ -3988,19 +3969,10 @@ if(lf)lf.addEventListener("submit",async e=>{e.preventDefault();e.stopImmediateP
  try{
    const c=await signInWithEmailAndPassword(auth,emailOf(phone),password);
    let u={name:c.user.displayName||"",phone,email:c.user.email,photo:""};
-   try{
-     const s=await getDoc(uref(c.user.uid));
-     if(s.exists())u={...u,...s.data()};
-   }catch(firestoreErr){
-     console.warn("Tokoinoya: profil Firestore belum dapat dibaca; login Auth tetap dilanjutkan.",firestoreErr);
-   }
+   const s=await getDoc(uref(c.user.uid));
+   if(s.exists())u={...u,...s.data()};
    localSession({...u,uid:c.user.uid,phone:phoneOf(u.phone||phone),email:c.user.email});
-   try{
-     await hydrate(c.user.uid);
-   }catch(firestoreErr){
-     console.warn("Tokoinoya: data Firestore belum dapat diambil; data lokal tetap digunakan.",firestoreErr);
-     loadUserData();
-   }
+   await hydrate(c.user.uid);
    checkAuth();openDashboardAfterLogin();lf.reset();notify("Masuk Berhasil",`Selamat datang kembali, ${currentSessionUser.name||nameFromPhone(phone)}!`);
  }catch(err){
    console.error("Tokoinoya Firebase login:",err);
