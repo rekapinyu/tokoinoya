@@ -1655,6 +1655,26 @@ main:has(#view-kasir:not(.hidden)) #view-kasir .kasir-shell{flex:1 1 auto!import
         // Private clone: sesi login hanya boleh berasal dari Firebase Auth Tokoinoya.
         let currentSessionUser = null;
 
+        /* SESSION RELOAD: satu-satunya pemulihan sesi lokal sebelum Firebase selesai bootstrap. */
+        (function restoreSessionBeforeAuthBootstrap(){
+            try{
+                const raw=localStorage.getItem('finance_active_session');
+                if(!raw)return;
+                const cached=JSON.parse(raw);
+                if(cached && cached.uid && (cached.phone || cached.email)){
+                    currentSessionUser={
+                        uid:String(cached.uid),
+                        name:cached.name||'',
+                        phone:String(cached.phone||'').replace(/\D/g,''),
+                        photo:cached.photo||'',
+                        email:cached.email||''
+                    };
+                }
+            }catch(e){
+                console.warn('Tokoinoya session restore:',e);
+            }
+        })();
+
         let historyData = [];
         let pengeluaranData = [];
         let kasbonData = [];
@@ -3750,7 +3770,8 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstati
 
 const firebaseConfig={apiKey:"AIzaSyBz_dr3hKSFWdj1AO2zrc3-XWNCiKUQoV8",authDomain:"tokoinoya.firebaseapp.com",databaseURL:"https://tokoinoya-default-rtdb.asia-southeast1.firebasedatabase.app",projectId:"tokoinoya",storageBucket:"tokoinoya.firebasestorage.app",messagingSenderId:"280150644008",appId:"1:280150644008:web:e59ee7f2eda5e6afdd2c1d",measurementId:"G-50SYJFE941"};
 const app=initializeApp(firebaseConfig), auth=getAuth(app), db=getFirestore(app), storage=getStorage(app);
-const authPersistenceReady=setPersistence(auth,browserLocalPersistence).catch(e=>{console.warn("Tokoinoya Firebase Auth persistence:",e);});
+/* SESSION RELOAD: Firebase Auth selalu memakai persistence browser/local. */
+const authPersistenceReady=setPersistence(auth,browserLocalPersistence);
 window.TokoinoyaFirebase={app,auth,db,storage,ready:false,uid:null,unsubscribe:null};
 const USERS="tokoinoya_users", DATA="tokoinoya_data", MAX=850000;
 const phoneOf=v=>String(v||"").replace(/\D/g,"");
@@ -3985,8 +4006,6 @@ if(lf){
     if(submitButton)submitButton.disabled=true;
 
     try{
-      // Pastikan Firebase Auth sudah memakai sesi browser sebelum login.
-      await authPersistenceReady;
       // HANYA blok ini yang menentukan apakah kredensial Firebase benar/salah.
       const c=await signInWithEmailAndPassword(auth,emailOf(phone),password);
 
@@ -4316,14 +4335,35 @@ async function consumeLandingLogin(){
 const landingHandoffPromise=consumeLandingLogin();
 
 onAuthStateChanged(auth,async u=>{
+  await authPersistenceReady;
   await landingHandoffPromise;
   window.TokoinoyaFirebase.ready=true;
   window.TokoinoyaFirebase.uid=u?.uid||null;
   if(!u){
     if(dataUnsub)dataUnsub();
     if(userUnsub)userUnsub();
-    // Sesi lokal hanya dihapus oleh Logout yang disengaja.
-    // Firebase Auth persistence menangani pemulihan sesi setelah reload.
+
+    /*
+     * SESSION RELOAD — satu implementasi.
+     * Callback null saat bootstrap Firebase TIDAK boleh menghapus sesi.
+     * Sesi hanya dihapus oleh handleLogout() yang memang merupakan logout.
+     */
+    if(!currentSessionUser){
+      try{
+        const raw=localStorage.getItem("finance_active_session");
+        const cached=raw?JSON.parse(raw):null;
+        if(cached && cached.uid && (cached.phone || cached.email)){
+          currentSessionUser={
+            uid:String(cached.uid),
+            name:cached.name||"",
+            phone:String(cached.phone||"").replace(/\D/g,""),
+            photo:cached.photo||"",
+            email:cached.email||""
+          };
+        }
+      }catch(e){console.warn("Tokoinoya session bootstrap:",e)}
+    }
+
     window.__tokoinoyaLandingHandoffActive=false;
     checkAuth();
     return
