@@ -79,7 +79,7 @@
                     justify-content:flex-start!important;
                     padding:0!important;
                     overflow:hidden!important;
-                    background:#f8fafc url('https://github.com/rekapinyu/rekapinyu.github.io/blob/main/FotoBanerLogin.jpg?raw=true') right center / auto 100% no-repeat!important;
+                    background:#f8fafc url('https://github.com/tokoinoya/tokoinoya.github.io/blob/main/FotoBanerLogin.jpg?raw=true') right center / auto 100% no-repeat!important;
                 }
                 #auth-container::after{
                     content:"";
@@ -205,7 +205,7 @@
     </style>
 <!-- PATCH STYLE REFERENSI: hanya tampilan visual dashboard.
          Menu, ID, event, fungsi, data, dan logika aplikasi tidak diubah. -->
-<style id="rekapinyu-reference-design">
+<style id="tokoinoya-reference-design">
       :root{
         --rk-bg:#f1f4f8;
         --rk-surface:#ffffff;
@@ -523,7 +523,7 @@
           padding:0!important;
           overflow:hidden!important;
           border-radius:0!important;
-          background:#fff url('https://github.com/rekapinyu/rekapinyu.github.io/blob/main/FotoBanerLogin.jpg?raw=true') right center / auto 100% no-repeat!important;
+          background:#fff url('https://github.com/tokoinoya/tokoinoya.github.io/blob/main/FotoBanerLogin.jpg?raw=true') right center / auto 100% no-repeat!important;
           background-color:#fff!important;
           box-shadow:none!important;
         }
@@ -566,10 +566,10 @@
         #view-input > div > div:first-child{width:100%!important;max-width:none!important;}
       }
     </style>
-<style id="rekapinyu-boot-guard">
+<style id="tokoinoya-boot-guard">
   html.rk-session-boot #auth-container{visibility:hidden!important}
 </style>
-<script id="rekapinyu-boot-guard-script">
+<script id="tokoinoya-boot-guard-script">
 (function(){
   try{
     var raw=localStorage.getItem('finance_active_session');
@@ -582,7 +582,7 @@
 </script>
 <!-- PATCH MOBILE TERAKHIR: hanya perbaikan tampilan mobile.
      Tidak mengubah HTML, JavaScript, Firebase, event, data, atau tampilan desktop. -->
-<style id="rekapinyu-mobile-only-final-fix">
+<style id="tokoinoya-mobile-only-final-fix">
 @media (max-width:767px){
 
   /* Area mobile lebih rapi dan tidak tertutup dock bawah. */
@@ -936,7 +936,7 @@ main:has(#view-kasir:not(.hidden)) #view-kasir .kasir-shell{flex:1 1 auto!import
 <!-- CARD LOGIN -->
 <div class="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl border border-slate-100 transition-all" id="login-card">
 <div class="text-center mb-6 login-brand-header">
-<img alt="REKAPINYU" class="login-brand-logo" src="https://github.com/rekapinyu/rekapinyu.github.io/blob/main/LogoRekpinyuBiru.jpg?raw=true"/>
+<img alt="REKAPINYU" class="login-brand-logo" src="https://github.com/tokoinoya/tokoinoya.github.io/blob/main/LogoRekpinyuBiru.jpg?raw=true"/>
 <p class="login-brand-tagline">Kelola Keuangan Anda Dengan Mudah</p>
 </div>
 <form class="space-y-4" id="login-form">
@@ -969,7 +969,7 @@ main:has(#view-kasir:not(.hidden)) #view-kasir .kasir-shell{flex:1 1 auto!import
 <!-- CARD REGISTER -->
 <div class="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl border border-slate-100 hidden transition-all" id="register-card">
 <div class="text-center mb-6 login-brand-header">
-<img alt="REKAPINYU" class="login-brand-logo" src="https://github.com/rekapinyu/rekapinyu.github.io/blob/main/LogoRekpinyuBiru.jpg?raw=true"/>
+<img alt="REKAPINYU" class="login-brand-logo" src="https://github.com/tokoinoya/tokoinoya.github.io/blob/main/LogoRekpinyuBiru.jpg?raw=true"/>
 <p class="login-brand-tagline">Kelola Keuangan Anda Dengan Mudah</p>
 </div>
 <form class="space-y-4" id="register-form">
@@ -1112,7 +1112,7 @@ main:has(#view-kasir:not(.hidden)) #view-kasir .kasir-shell{flex:1 1 auto!import
   class="sidebar-social-btn sidebar-social-website"
   title="Website"
   type="button"
-  onclick="window.location.href='https://rekapinyu.github.io/page/'">
+  onclick="window.location.href='https://tokoinoya.github.io/page/'">
   <i class="fa-solid fa-globe"></i>
 </button>
 </div>
@@ -1146,7 +1146,7 @@ main:has(#view-kasir:not(.hidden)) #view-kasir .kasir-shell{flex:1 1 auto!import
 <script id="sidebar-refresh-loading-js">
 (function(){
   const refreshButton=document.getElementById('sidebar-refresh-btn');
-  const refreshStateKey='rekapinyu_refresh_loading_state';
+  const refreshStateKey='tokoinoya_refresh_loading_state';
   const refreshDuration=10000;
   const refreshInterval=1000;
   let refreshIntervalId=null;
@@ -1757,7 +1757,7 @@ main:has(#view-kasir:not(.hidden)) #view-kasir .kasir-shell{flex:1 1 auto!import
         }
 function checkAuth() {
             const authContainer = document.getElementById('auth-container');
-            if (currentSessionUser || window.__rekapinyuLandingHandoffActive) {
+            if (currentSessionUser || window.__tokoinoyaLandingHandoffActive) {
                 // Saat datang dari Landing Page, jangan tampilkan login bawaan aplikasi
                 // sebelum proses handoff Firebase selesai.
                 authContainer.classList.add('hidden');
@@ -1777,7 +1777,7 @@ function checkAuth() {
 
         // Deteksi handoff SEBELUM checkAuth pertama kali dijalankan.
         // Ini mencegah race condition yang sempat menampilkan popup login aplikasi.
-        window.__rekapinyuLandingHandoffActive = /^#rekapinyu_login=/.test(window.location.hash || '');
+        window.__tokoinoyaLandingHandoffActive = /^#tokoinoya_login=/.test(window.location.hash || '');
         checkAuth();
 
         function updateUserAvatarUI() {
@@ -3829,7 +3829,7 @@ function persistAllDataLocally(){
  nativeSet.call(localStorage,`finance_kasbon_desktop_${phone}`,JSON.stringify(Array.isArray(kasbonData)?kasbonData:[]));
  nativeSet.call(localStorage,`finance_backup_desktop_${phone}`,JSON.stringify(Array.isArray(backupOtomatisData)?backupOtomatisData:[]));
 }
-function requestDataCloudSync(){try{window.__rekapinyuSaveCloudData?.();}catch(e){}}
+function requestDataCloudSync(){try{window.__tokoinoyaSaveCloudData?.();}catch(e){}}
 // Bridge untuk script klasik: helper di dalam module tidak terlihat oleh script biasa.
 window.__markDataPending=(key,items)=>markDataPending(key,items);
 window.__requestDataCloudSync=()=>requestDataCloudSync();
@@ -3918,7 +3918,7 @@ function redraw(){try{loadUserData()}catch{} try{populateHistoryFilters?.();rend
  * bergantung pada timer 200 ms saat pengguna berpindah halaman/perangkat.
  */
 let cloudSaveChain=Promise.resolve();
-window.__rekapinyuSaveCloudData=()=>{
+window.__tokoinoyaSaveCloudData=()=>{
  cloudSaveChain=cloudSaveChain.then(async()=>{
    await saveCloudData();
    const phone=phoneOf(currentSessionUser?.phone);
@@ -3935,13 +3935,13 @@ window.__rekapinyuSaveCloudData=()=>{
 };
 
 // Data tertentu tetap disinkronkan ke Firebase; Produk Kasir dikelola sepenuhnya di localStorage.
-if(!Storage.prototype.__rekapinyuFirebaseFull){
+if(!Storage.prototype.__tokoinoyaFirebaseFull){
  Storage.prototype.setItem=function(k,v){const r=nativeSet.call(this,k,v);if(this===localStorage&&window.RekapinyuFirebase.ready&&cloudUid()){
    const p=phoneOf(currentSessionUser?.phone);const watched=[`finance_history_desktop_${p}`,`finance_pengeluaran_desktop_${p}`,`finance_kasbon_desktop_${p}`,`finance_backup_desktop_${p}`,`finance_shop_cover_${p}`,`finance_kasir_transactions_${p}`];
-   if(watched.includes(k)){clearTimeout(window.__rfSaveTimer);window.__rfSaveTimer=setTimeout(()=>window.__rekapinyuSaveCloudData?.(),200)}
+   if(watched.includes(k)){clearTimeout(window.__rfSaveTimer);window.__rfSaveTimer=setTimeout(()=>window.__tokoinoyaSaveCloudData?.(),200)}
  }return r};
- Storage.prototype.removeItem=function(k){const r=nativeRemove.call(this,k);if(this===localStorage&&window.RekapinyuFirebase.ready&&cloudUid()){clearTimeout(window.__rfSaveTimer);window.__rfSaveTimer=setTimeout(()=>window.__rekapinyuSaveCloudData?.(),100)}return r};
- Storage.prototype.__rekapinyuFirebaseFull=true;
+ Storage.prototype.removeItem=function(k){const r=nativeRemove.call(this,k);if(this===localStorage&&window.RekapinyuFirebase.ready&&cloudUid()){clearTimeout(window.__rfSaveTimer);window.__rfSaveTimer=setTimeout(()=>window.__tokoinoyaSaveCloudData?.(),100)}return r};
+ Storage.prototype.__tokoinoyaFirebaseFull=true;
 }
 
 // Firebase registration replaces the original registration handler.
@@ -4097,11 +4097,11 @@ if(ci)ci.addEventListener("change",async e=>{
 },true);
 
 // Password update uses Firebase Auth. Recent login may be required by Firebase.
-window.__rekapinyuFirebaseChangePassword=async p=>{if(!auth.currentUser)throw new Error("Belum login Firebase.");await updatePassword(auth.currentUser,p)};
+window.__tokoinoyaFirebaseChangePassword=async p=>{if(!auth.currentUser)throw new Error("Belum login Firebase.");await updatePassword(auth.currentUser,p)};
 
 // Hook final: tombol Simpan profil dan sampul dibuat melalui event capture tingkat dokumen.
 // Ini memastikan handler tetap aktif walaupun kode original mengisi ulang onclick tombol.
-window.__rekapinyuSaveProfilePhoto=async function(){
+window.__tokoinoyaSaveProfilePhoto=async function(){
   const inp=document.getElementById("input-new-photo"),file=inp?.files?.[0];
   if(!file){showModal("Gagal","Silakan pilih foto terlebih dahulu.","fa-solid fa-circle-exclamation text-rose-600");return false;}
   if(!/^image\/(jpeg|png)$/i.test(file.type)){showModal("Gagal","Format yang didukung hanya JPG dan PNG.","fa-solid fa-circle-exclamation text-rose-600");return false;}
@@ -4148,7 +4148,7 @@ window.__rekapinyuSaveProfilePhoto=async function(){
   }
 };
 
-window.__rekapinyuSaveCoverPhoto=async function(){
+window.__tokoinoyaSaveCoverPhoto=async function(){
   const btn=document.getElementById("shop-cover-save");
   const img=document.getElementById("shop-cover-image");
   if(!btn||btn.classList.contains("hidden")||btn.dataset.saving==="1")return false;
@@ -4231,11 +4231,11 @@ document.addEventListener("click",function(e){
     if(!document.getElementById("input-new-photo"))return;
     if(target.dataset.saving==="1")return;
     e.preventDefault();e.stopImmediatePropagation();
-    window.__rekapinyuSaveProfilePhoto();
+    window.__tokoinoyaSaveProfilePhoto();
   }else if(target.id==="shop-cover-save"){
     if(target.classList.contains("hidden")||target.dataset.saving==="1")return;
     e.preventDefault();e.stopImmediatePropagation();
-    window.__rekapinyuSaveCoverPhoto();
+    window.__tokoinoyaSaveCoverPhoto();
   }
 },true);
 
@@ -4275,7 +4275,7 @@ if(pendingHistory||pendingPengeluaran||pendingKasbon||pendingBackup || ((preserv
 async function consumeLandingLogin(){
   try{
     const hash=window.location.hash||"";
-    const m=hash.match(/^#rekapinyu_login=([^&]+)$/);
+    const m=hash.match(/^#tokoinoya_login=([^&]+)$/);
     if(!m)return false;
     const raw=m[1].replace(/-/g,"+").replace(/_/g,"/");
     const padded=raw+"=".repeat((4-raw.length%4)%4);
@@ -4291,12 +4291,12 @@ async function consumeLandingLogin(){
       if(s.exists())u={...u,...s.data()};
     }catch(e){console.warn("Rekapinyu handoff: profil Firestore belum dapat dibaca.",e)}
     localSession({...u,uid:c.user.uid,phone:phoneOf(u.phone||data.phone),email:c.user.email});
-    window.__rekapinyuLandingHandoffActive = true;
+    window.__tokoinoyaLandingHandoffActive = true;
     try{await hydrate(c.user.uid)}catch(e){console.warn("Rekapinyu handoff: data belum dapat dimuat.",e)}
     return true;
   }catch(e){
     console.error("Rekapinyu landing login handoff:",e);
-    window.__rekapinyuLandingHandoffActive = false;
+    window.__tokoinoyaLandingHandoffActive = false;
     try{history.replaceState(null,document.title,window.location.pathname+window.location.search)}catch{}
     notify("Login Gagal","Sesi dari Landing Page tidak dapat diproses. Silakan login kembali melalui aplikasi.","fa-solid fa-circle-xmark text-rose-600");
     return false;
@@ -4321,19 +4321,19 @@ onAuthStateChanged(auth,async u=>{
     if(!currentSessionUser){
       nativeRemove.call(localStorage,"finance_active_session");
     }
-    window.__rekapinyuLandingHandoffActive=false;
+    window.__tokoinoyaLandingHandoffActive=false;
     checkAuth();
     return
   }
   try{
     await hydrate(u.uid);
     realtime(u);
-    window.__rekapinyuLandingHandoffActive=false;
+    window.__tokoinoyaLandingHandoffActive=false;
     checkAuth();
     redraw()
   }catch(e){
     console.error("Firebase hydrate:",e);
-    window.__rekapinyuLandingHandoffActive=false;
+    window.__tokoinoyaLandingHandoffActive=false;
     checkAuth();
   }
 });
@@ -4574,7 +4574,7 @@ onAuthStateChanged(auth,async u=>{
     #history-io-export { order: 1 !important; }
     #history-io-floating.history-io-visible { display: flex !important; }
     #history-io-floating.history-io-hidden { display: none !important; }
-    #rekapinyu-kasbon-filter-wrap {
+    #tokoinoya-kasbon-filter-wrap {
         position: fixed;
         right: 18px;
         bottom: 78px;
@@ -4584,7 +4584,7 @@ onAuthStateChanged(auth,async u=>{
         align-items: flex-end;
         gap: 8px;
     }
-    #rekapinyu-kasbon-filter-button {
+    #tokoinoya-kasbon-filter-button {
         width: 54px;
         height: 54px;
         border-radius: 9999px;
@@ -4597,7 +4597,7 @@ onAuthStateChanged(auth,async u=>{
         box-shadow: 0 8px 20px rgba(15,23,42,.18);
         cursor: pointer;
     }
-    #rekapinyu-kasbon-filter-menu {
+    #tokoinoya-kasbon-filter-menu {
         width: 170px;
         padding: 6px;
         background: #fff;
@@ -4605,7 +4605,7 @@ onAuthStateChanged(auth,async u=>{
         border-radius: 14px;
         box-shadow: 0 14px 30px rgba(15,23,42,.16);
     }
-    #rekapinyu-kasbon-filter-menu button {
+    #tokoinoya-kasbon-filter-menu button {
         width: 100%;
         display: flex;
         align-items: center;
@@ -4617,19 +4617,19 @@ onAuthStateChanged(auth,async u=>{
         font-weight: 700;
         text-align: left;
     }
-    #rekapinyu-kasbon-filter-menu button:hover { background: #f1f5f9; }
+    #tokoinoya-kasbon-filter-menu button:hover { background: #f1f5f9; }
     @media (max-width: 767px) {
-        #rekapinyu-kasbon-filter-wrap { right: 14px; bottom: 76px; }
-        #rekapinyu-kasbon-filter-button { width: 50px; height: 50px; }
+        #tokoinoya-kasbon-filter-wrap { right: 14px; bottom: 76px; }
+        #tokoinoya-kasbon-filter-button { width: 50px; height: 50px; }
     }
 </style>
-<div id="rekapinyu-kasbon-filter-wrap">
-<div class="hidden" id="rekapinyu-kasbon-filter-menu">
+<div id="tokoinoya-kasbon-filter-wrap">
+<div class="hidden" id="tokoinoya-kasbon-filter-menu">
 <button data-kasbon-filter="" type="button"><i class="fa-solid fa-list w-4"></i> Semua Status</button>
 <button data-kasbon-filter="lunas" type="button"><i class="fa-solid fa-circle-check text-emerald-600 w-4"></i> Lunas</button>
 <button data-kasbon-filter="belum_lunas" type="button"><i class="fa-solid fa-clock text-amber-500 w-4"></i> Belum Lunas</button>
 </div>
-<button aria-label="Filter Kasbon" id="rekapinyu-kasbon-filter-button" title="Filter Kasbon" type="button">
+<button aria-label="Filter Kasbon" id="tokoinoya-kasbon-filter-button" title="Filter Kasbon" type="button">
 <i class="fa-solid fa-filter"></i>
 </button>
 </div>
@@ -4809,7 +4809,7 @@ onAuthStateChanged(auth,async u=>{
     }
 
     function updateKasbonFilter() {
-        const wrap = document.getElementById('rekapinyu-kasbon-filter-wrap');
+        const wrap = document.getElementById('tokoinoya-kasbon-filter-wrap');
         const view = document.getElementById('view-kasbon');
         if (wrap && view) wrap.style.display = view.classList.contains('hidden') ? 'none' : 'flex';
     }
@@ -4824,8 +4824,8 @@ onAuthStateChanged(auth,async u=>{
     }
 
     function bindKasbonFilter() {
-        const button = document.getElementById('rekapinyu-kasbon-filter-button');
-        const menu = document.getElementById('rekapinyu-kasbon-filter-menu');
+        const button = document.getElementById('tokoinoya-kasbon-filter-button');
+        const menu = document.getElementById('tokoinoya-kasbon-filter-menu');
         if (!button || !menu || button.dataset.bound) return;
         button.dataset.bound = '1';
         button.addEventListener('click', event => { event.stopPropagation(); menu.classList.toggle('hidden'); });
@@ -4837,7 +4837,7 @@ onAuthStateChanged(auth,async u=>{
             menu.classList.add('hidden');
         });
         document.addEventListener('click', event => {
-            if (!event.target.closest('#rekapinyu-kasbon-filter-wrap')) menu.classList.add('hidden');
+            if (!event.target.closest('#tokoinoya-kasbon-filter-wrap')) menu.classList.add('hidden');
         });
     }
 
@@ -4862,7 +4862,7 @@ onAuthStateChanged(auth,async u=>{
     setInterval(init, 700);
 })();
 </script>
-<style id="rekapinyu-sidebar-menu-grid-final-v4">
+<style id="tokoinoya-sidebar-menu-grid-final-v4">
 @media (min-width:768px){
   #sidebar nav{
     display:grid!important;
@@ -5120,7 +5120,7 @@ onAuthStateChanged(auth,async u=>{
   function saveKasirStore(){
     localStorage.setItem(kasirUserKey('products'),JSON.stringify(kasirProducts));
     localStorage.setItem(kasirUserKey('transactions'),JSON.stringify(kasirTransactions));
-    try{window.__rekapinyuSaveCloudData?.();}catch(e){}
+    try{window.__tokoinoyaSaveCloudData?.();}catch(e){}
   }
   function rupiah(n){return 'Rp '+(Number(n)||0).toLocaleString('id-ID')}
   function esc(v){return String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
