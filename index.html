@@ -3961,34 +3961,80 @@ if(rf)rf.addEventListener("submit",async e=>{e.preventDefault();e.stopImmediateP
  }
 },true);
 
-// Firebase login: Tokoinoya Auth is the only authentication source for this private clone.
+// LOGIN TOKOINOYA — SATU IMPLEMENTASI SAJA.
+// Implementasi login lama pada area ini dihapus seluruhnya agar tidak ada
+// handler submit yang bertumpuk atau error data Firebase yang dianggap
+// sebagai kesalahan nomor HP/kata sandi.
 const lf=document.getElementById("login-form");
-if(lf)lf.addEventListener("submit",async e=>{e.preventDefault();e.stopImmediatePropagation();
- const phone=phoneOf(document.getElementById("login-phone").value),password=document.getElementById("login-password").value;
- if(!phone||!password){notify("Gagal Masuk","Nomor HP dan Kata Sandi wajib diisi.","fa-solid fa-circle-xmark text-rose-600");return;}
- let c;
- try{
-   c=await signInWithEmailAndPassword(auth,emailOf(phone),password);
- }catch(err){
-   console.error("Tokoinoya Firebase login:",err);
-   let msg="Nomor HP atau Kata Sandi yang Anda masukkan salah.";
-   if(err.code==="auth/too-many-requests")msg="Terlalu banyak percobaan login. Coba lagi beberapa saat lagi.";
-   notify("Gagal Masuk",msg,"fa-solid fa-circle-xmark text-rose-600");
-   return;
- }
- try{
-   let u={name:c.user.displayName||"",phone,email:c.user.email,photo:""};
-   const s=await getDoc(uref(c.user.uid));
-   if(s.exists())u={...u,...s.data()};
-   localSession({...u,uid:c.user.uid,phone:phoneOf(u.phone||phone),email:c.user.email});
-   await hydrate(c.user.uid);
- }catch(err){
-   console.error("Tokoinoya Firebase login data:",err);
-   // Login Firebase sudah berhasil; kegagalan memuat profil/data tidak boleh
-   // dianggap sebagai nomor HP atau kata sandi yang salah.
- }
- checkAuth();openDashboardAfterLogin();lf.reset();notify("Masuk Berhasil",`Selamat datang kembali, ${currentSessionUser?.name||nameFromPhone(phone)}!`);
-},true);
+if(lf){
+  lf.onsubmit=async function(e){
+    e.preventDefault();
+    e.stopPropagation();
+
+    const phone=phoneOf(document.getElementById("login-phone")?.value);
+    const password=document.getElementById("login-password")?.value||"";
+    const submitButton=lf.querySelector('button[type="submit"]');
+
+    if(!phone||!password){
+      notify("Gagal Masuk","Nomor HP dan Kata Sandi wajib diisi.","fa-solid fa-circle-xmark text-rose-600");
+      return;
+    }
+
+    if(submitButton?.disabled)return;
+    if(submitButton)submitButton.disabled=true;
+
+    try{
+      // HANYA blok ini yang menentukan apakah kredensial Firebase benar/salah.
+      const c=await signInWithEmailAndPassword(auth,emailOf(phone),password);
+
+      // Firebase Auth sudah menerima kredensial. Semua proses profil/data
+      // dipisahkan agar kegagalannya tidak pernah memunculkan popup
+      // "Nomor HP atau Kata Sandi ... salah".
+      let u={
+        uid:c.user.uid,
+        name:c.user.displayName||"",
+        phone,
+        email:c.user.email||emailOf(phone),
+        photo:""
+      };
+
+      try{
+        const s=await getDoc(uref(c.user.uid));
+        if(s.exists())u={...u,...s.data()};
+      }catch(err){
+        console.warn("Tokoinoya login: profil Firestore tidak dapat dimuat.",err);
+      }
+
+      localSession({
+        ...u,
+        uid:c.user.uid,
+        phone:phoneOf(u.phone||phone),
+        email:c.user.email||u.email||emailOf(phone)
+      });
+
+      try{
+        await hydrate(c.user.uid);
+      }catch(err){
+        console.warn("Tokoinoya login: data aplikasi tidak dapat dimuat.",err);
+      }
+
+      checkAuth();
+      openDashboardAfterLogin();
+      lf.reset();
+      notify("Masuk Berhasil",`Selamat datang kembali, ${currentSessionUser?.name||nameFromPhone(phone)}!`);
+    }catch(err){
+      // Popup kredensial hanya boleh muncul jika signInWithEmailAndPassword
+      // benar-benar gagal. Error setelah Auth berhasil tidak masuk ke sini.
+      console.error("Tokoinoya Firebase login auth:",err);
+      let msg="Nomor HP atau Kata Sandi yang Anda masukkan salah.";
+      if(err.code==="auth/too-many-requests")msg="Terlalu banyak percobaan login. Coba lagi beberapa saat lagi.";
+      else if(err.code==="auth/network-request-failed")msg="Koneksi ke server gagal. Periksa internet lalu coba lagi.";
+      notify("Gagal Masuk",msg,"fa-solid fa-circle-xmark text-rose-600");
+    }finally{
+      if(submitButton)submitButton.disabled=false;
+    }
+  };
+}
 
 // Logout now signs out from Firebase Auth.
 window.handleLogout=async()=>{try{await saveCloudData()}catch{}try{await signOut(auth)}catch{}currentSessionUser=null;nativeRemove.call(localStorage,"finance_active_session");checkAuth();toggleAuthView("login")};
