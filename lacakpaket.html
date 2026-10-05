@@ -8,7 +8,32 @@
 :root{--blue:#315cf5;--lime:#c7ff24;--bg:#f5f7fb;--text:#172033;--muted:#7b8497;--line:#e5e8ef;--green:#28b77b;--orange:#d88b18;--red:#ef5b66}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text)}
 button,input{font:inherit}.page{min-height:100vh;display:flex;flex-direction:column}.header{height:74px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 6%;position:sticky;top:0;z-index:20}.brand{display:flex;align-items:center;gap:10px}.brand-logo{display:block;width:300px;height:65px;max-height:65px;object-fit:contain;transform:scale(1.2);transform-origin:left center}.nav{display:flex;gap:10px}.nav a{color:#596275;text-decoration:none;font-size:13px;font-weight:700;padding:10px 12px;border-radius:10px}.nav a:hover{background:#f1f4ff;color:var(--blue)}
-.hero{background:linear-gradient(135deg,#172b68 0%,#315cf5 65%,#5577ff 100%);color:#fff;padding:68px 20px 110px;text-align:center;margin:0!important}.eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:850;color:var(--lime)}h1{font-size:clamp(31px,5vw,54px);margin:10px 0 12px;line-height:1.05}.hero p{max-width:650px;margin:0 auto;color:#dfe5ff;line-height:1.6}.search-card{width:min(820px,calc(100% - 28px));margin:-48px auto 0;background:#fff;border-radius:24px;box-shadow:0 18px 50px rgba(20,35,80,.18);padding:18px;position:relative;z-index:5}.search-row{display:flex;gap:10px}.search-row input{flex:1;border:1px solid var(--line);border-radius:14px;padding:16px 17px;outline:none;font-size:15px}.search-row input:focus{border-color:var(--blue);box-shadow:0 0 0 3px #e9eeff}.btn{border:0;border-radius:14px;padding:14px 22px;font-weight:800;background:var(--blue);color:#fff;min-width:130px;cursor:pointer}.btn:hover{filter:brightness(.96)}.hint{text-align:left;color:var(--muted);font-size:11px;padding:10px 4px 0}
+/* ===== HALAMAN DEPAN — SATU IMPLEMENTASI ===== */
+.home-hero{position:relative;min-height:calc(100vh - 74px);display:flex;align-items:center;justify-content:center;overflow:hidden;background-image:linear-gradient(180deg,rgba(7,20,55,.38),rgba(7,20,55,.55)),url("https://images.unsplash.com/photo-1765608461706-2678e824ed15?auto=format&fit=crop&w=2400&q=82");background-size:cover;background-position:center 52%;color:#fff;padding:70px 20px 150px}
+.home-hero-content{width:min(980px,100%);text-align:center;position:relative;z-index:2}
+.home-kicker{font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:900;color:var(--lime);margin-bottom:14px}
+.home-hero h1{font-size:clamp(38px,6vw,72px);line-height:1.04;margin:0 auto 18px;font-weight:950;max-width:950px;text-shadow:0 4px 24px rgba(0,0,0,.22)}
+.home-hero p{max-width:720px;margin:0 auto;color:rgba(255,255,255,.92);font-size:15px;line-height:1.65;text-shadow:0 2px 10px rgba(0,0,0,.2)}
+.home-cta{margin-top:28px;border:1px solid rgba(255,255,255,.95);background:rgba(255,255,255,.08);color:#fff;border-radius:14px;padding:14px 30px;font-weight:900;cursor:pointer;backdrop-filter:blur(5px);transition:.2s}
+.home-cta:hover{background:#fff;color:#172033}
+.home-tools{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);width:min(900px,calc(100% - 30px));display:grid;grid-template-columns:1fr 1px 1fr;align-items:center;background:rgba(255,255,255,.9);border:1px solid rgba(255,255,255,.72);border-radius:34px;box-shadow:0 18px 50px rgba(7,20,55,.23);backdrop-filter:blur(12px);z-index:4;color:var(--text);padding:0 18px}
+.home-tools-divider{height:62px;background:rgba(23,32,51,.12)}
+.home-tool{display:flex;align-items:center;gap:13px;padding:17px 14px}
+.home-tool-icon{width:42px;height:42px;border-radius:13px;background:#e9eeff;color:var(--blue);display:grid;place-items:center;font-size:20px;flex:0 0 auto}
+.home-tool-copy{min-width:0;flex:1;text-align:left}
+.home-tool-title{font-size:13px;font-weight:900;margin-bottom:4px}
+.home-tool-input{width:100%;border:0;outline:none;background:transparent;color:var(--muted);font-size:14px;padding:0}
+.home-tool-input::placeholder{color:#9ba3b1}
+.home-tool-action{border:0;background:transparent;color:var(--text);font-size:22px;line-height:1;cursor:pointer;padding:8px;border-radius:10px}
+.home-tool-action:hover{background:#eef1f7}
+@media(max-width:760px){
+  .home-hero{min-height:calc(100vh - 112px);padding:50px 15px 190px;background-position:center}
+  .home-hero h1{font-size:clamp(34px,10vw,50px)}
+  .home-hero p{font-size:13px}
+  .home-tools{grid-template-columns:1fr;width:calc(100% - 20px);border-radius:25px;padding:8px 10px;bottom:14px}
+  .home-tools-divider{display:none}
+  .home-tool{padding:12px 8px}
+}
 .container{width:min(1100px,calc(100% - 28px));margin:25px auto 70px}.result{display:none}.result.show{display:block}.top-card{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 8px 28px rgba(34,48,80,.06);overflow:hidden}.top{padding:22px;display:flex;justify-content:space-between;gap:20px;border-bottom:1px solid var(--line)}.label{font-size:11px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.08em}.resi{font-size:23px;font-weight:900;margin-top:5px}.status{padding:8px 12px;border-radius:20px;font-size:11px;font-weight:850;height:max-content}.green{background:#e4faef;color:#16875b}.blue{background:#e9eeff;color:var(--blue)}.orange{background:#fff1d9;color:#b26a00}.red{background:#ffe5e8;color:#c13b47}.gray{background:#eef0f4;color:#6e7685}
 .info-grid{display:grid;grid-template-columns:repeat(4,1fr);padding:18px 22px;gap:15px}.info b{display:block;margin-top:5px;font-size:14px}.info span{font-size:11px;color:var(--muted)}
 .body-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;margin-top:18px}.card{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 8px 28px rgba(34,48,80,.06);padding:22px}.card h3{margin:0 0 18px;font-size:17px}.timeline{border-left:2px solid #dce3ff;margin:5px 0 0 8px;padding-left:24px}.event{position:relative;padding:0 0 25px}.event:last-child{padding-bottom:0}.event:before{content:"";position:absolute;left:-31px;top:2px;width:11px;height:11px;border-radius:50%;background:#c8cfdd;box-shadow:0 0 0 4px #f0f2f7}.event.done:before{background:var(--blue);box-shadow:0 0 0 4px #e9eeff}.event.current:before{background:var(--lime);box-shadow:0 0 0 4px #efffc4}.event b{font-size:14px}.event small{display:block;color:var(--muted);margin-top:4px;line-height:1.5}.route{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:20px}.place{text-align:center;flex:1}.place strong{display:block;font-size:14px}.place small{color:var(--muted);font-size:11px}.plane{width:38px;height:38px;border-radius:50%;background:#e9eeff;color:var(--blue);display:grid;place-items:center}.detail{border-top:1px solid var(--line);padding-top:16px;margin-top:16px}.detail-row{display:flex;justify-content:space-between;gap:15px;padding:8px 0;font-size:13px}.detail-row span:first-child{color:var(--muted)}.empty{background:#fff;border:1px solid var(--line);border-radius:22px;padding:50px 20px;text-align:center;color:var(--muted);box-shadow:0 8px 28px rgba(34,48,80,.05)}.empty .big{font-size:42px;margin-bottom:10px}.footer{text-align:center;color:var(--muted);font-size:11px;padding:30px 20px;border-top:1px solid var(--line);background:#fff;margin-top:auto}
@@ -245,19 +270,36 @@ button,input{font:inherit}.page{min-height:100vh;display:flex;flex-direction:col
 </section>
 
 <div id="trackingView">
-<section class="hero" id="tracking">
-  <div class="eyebrow">International Parcel Tracking</div>
-  <h1>Lacak Paket Anda</h1>
-  <p>Masukkan nomor resi ShipFlow untuk melihat perjalanan paket, status terkini, tujuan, layanan, dan riwayat pergerakannya.</p>
-</section>
-
-<div class="search-card">
-  <div class="search-row">
-    <input id="trackingNumber" autocomplete="off" placeholder="Masukkan nomor resi, contoh: SF20261005001">
-    <button class="btn" onclick="trackPackage()">Lacak Paket</button>
+<section class="home-hero" id="tracking">
+  <div class="home-hero-content">
+    <div class="home-kicker">International Shipping</div>
+    <h1>Menyambung Kebahagiaan<br>dari Indonesia ke Dunia</h1>
+    <p>Kirim paket internasional dengan mudah, cek tarif pengiriman, dan lacak perjalanan paketmu dalam satu tempat.</p>
+    <button class="home-cta" type="button" onclick="openSendPackage(event)">Mulai Kirim Paket</button>
   </div>
-  <div class="hint">Contoh resi demo: <b>SF20261005001</b> · Data tracking otomatis membaca data dari portal pengiriman.</div>
-</div>
+
+  <div class="home-tools">
+    <div class="home-tool">
+      <div class="home-tool-icon">⌖</div>
+      <div class="home-tool-copy">
+        <div class="home-tool-title">Lacak Pengiriman</div>
+        <input class="home-tool-input" id="trackingNumber" autocomplete="off" placeholder="Masukkan nomor resi">
+      </div>
+      <button class="home-tool-action" type="button" onclick="trackPackage()" aria-label="Lacak pengiriman">⌕</button>
+    </div>
+
+    <div class="home-tools-divider"></div>
+
+    <div class="home-tool">
+      <div class="home-tool-icon">▣</div>
+      <div class="home-tool-copy">
+        <div class="home-tool-title">Cek Tarif</div>
+        <input class="home-tool-input" id="homePriceShortcut" readonly tabindex="-1" placeholder="Masukkan data pengiriman">
+      </div>
+      <button class="home-tool-action" type="button" onclick="openPriceCheck(event)" aria-label="Cek tarif">⌕</button>
+    </div>
+  </div>
+</section>
 
 <main class="container">
   <div id="result" class="result"></div>
