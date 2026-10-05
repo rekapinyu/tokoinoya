@@ -15,8 +15,6 @@ ay:flex;flex-direction:column}.header{height:74px;background:#fff;border-bottom:
 .home-kicker{font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:900;color:var(--lime);margin-bottom:14px}
 .home-hero h1{font-size:clamp(38px,6vw,72px);line-height:1.04;margin:0 auto 18px;font-weight:950;max-width:950px;text-shadow:0 4px 24px rgba(0,0,0,.22)}
 .home-hero p{max-width:720px;margin:0 auto;color:rgba(255,255,255,.92);font-size:15px;line-height:1.65;text-shadow:0 2px 10px rgba(0,0,0,.2)}
-.home-cta{margin-top:28px;border:1px solid rgba(255,255,255,.95);background:rgba(255,255,255,.08);color:#fff;border-radius:14px;padding:14px 30px;font-weight:900;cursor:pointer;backdrop-filter:blur(5px);transition:.2s}
-.home-cta:hover{background:#fff;color:#172033}
 .home-tools{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);width:min(900px,calc(100% - 30px));display:grid;grid-template-columns:1fr 1px 1fr;align-items:center;background:rgba(255,255,255,.9);border:1px solid rgba(255,255,255,.72);border-radius:34px;box-shadow:0 18px 50px rgba(7,20,55,.23);backdrop-filter:blur(12px);z-index:4;color:var(--text);padding:0 18px}
 .home-tools-divider{height:62px;background:rgba(23,32,51,.12)}
 .home-tool{display:flex;align-items:center;gap:13px;padding:17px 14px}
@@ -38,36 +36,6 @@ ay:flex;flex-direction:column}.header{height:74px;background:#fff;border-bottom:
 .container{width:min(1100px,calc(100% - 28px));margin:25px auto 70px}.result{display:none}.result.show{display:block}.top-card{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 8px 28px rgba(34,48,80,.06);overflow:hidden}.top{padding:22px;display:flex;justify-content:space-between;gap:20px;border-bottom:1px solid var(--line)}.label{font-size:11px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.08em}.resi{font-size:23px;font-weight:900;margin-top:5px}.status{padding:8px 12px;border-radius:20px;font-size:11px;font-weight:850;height:max-content}.green{background:#e4faef;color:#16875b}.blue{background:#e9eeff;color:var(--blue)}.orange{background:#fff1d9;color:#b26a00}.red{background:#ffe5e8;color:#c13b47}.gray{background:#eef0f4;color:#6e7685}
 .info-grid{display:grid;grid-template-columns:repeat(4,1fr);padding:18px 22px;gap:15px}.info b{display:block;margin-top:5px;font-size:14px}.info span{font-size:11px;color:var(--muted)}
 .body-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;margin-top:18px}.card{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 8px 28px rgba(34,48,80,.06);padding:22px}.card h3{margin:0 0 18px;font-size:17px}.timeline{border-left:2px solid #dce3ff;margin:5px 0 0 8px;padding-left:24px}.event{position:relative;padding:0 0 25px}.event:last-child{padding-bottom:0}.event:before{content:"";position:absolute;left:-31px;top:2px;width:11px;height:11px;border-radius:50%;background:#c8cfdd;box-shadow:0 0 0 4px #f0f2f7}.event.done:before{background:var(--blue);box-shadow:0 0 0 4px #e9eeff}.event.current:before{background:var(--lime);box-shadow:0 0 0 4px #efffc4}.event b{font-size:14px}.event small{display:block;color:var(--muted);margin-top:4px;line-height:1.5}.route{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:20px}.place{text-align:center;flex:1}.place strong{display:block;font-size:14px}.place small{color:var(--muted);font-size:11px}.plane{width:38px;height:38px;border-radius:50%;background:#e9eeff;color:var(--blue);display:grid;place-items:center}.detail{border-top:1px solid var(--line);padding-top:16px;margin-top:16px}.detail-row{display:flex;justify-content:space-between;gap:15px;padding:8px 0;font-size:13px}.detail-row span:first-child{color:var(--muted)}.empty{background:#fff;border:1px solid var(--line);border-radius:22px;padding:50px 20px;text-align:center;color:var(--muted);box-shadow:0 8px 28px rgba(34,48,80,.05)}.empty .big{font-size:42px;margin-bottom:10px}.footer{text-align:center;color:var(--muted);font-size:11px;padding:30px 20px;border-top:1px solid var(--line);background:#fff;margin-top:auto}
-
-/* ===== KIRIM PAKET — SATU IMPLEMENTASI ===== */
-.send-page{display:none;width:100%;padding:28px 20px 40px;background:var(--bg)}
-.send-page.show{display:block}
-.send-page-card{width:min(1000px,100%);margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:0 8px 28px rgba(34,48,80,.06);overflow:hidden}
-.send-page-head{padding:28px 26px;border-bottom:1px solid var(--line)}
-.send-page-head .eyebrow{color:var(--blue)}
-.send-page-head h2{margin:7px 0 8px;font-size:28px}
-.send-page-head p{margin:0;color:var(--muted);font-size:13px}
-.send-form{padding:24px 26px}
-.send-section{font-size:13px;font-weight:900;margin:0 0 12px;color:#172033}
-.send-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:22px}
-.send-field{display:flex;flex-direction:column;gap:7px}
-.send-field.full{grid-column:1/-1}
-.send-field label{font-size:11px;font-weight:800;color:#596275}
-.send-field input,.send-field select,.send-field textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px 13px;outline:none;background:#fff;color:var(--text)}
-.send-field textarea{min-height:82px;resize:vertical}
-.send-field input[readonly]{background:#f5f7fb;cursor:default;pointer-events:none;color:var(--text)}
-.send-field input:focus,.send-field select:focus,.send-field textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px #e9eeff}
-.send-note{font-size:11px;color:var(--muted);margin:-8px 0 18px}
-.send-actions{display:flex;justify-content:flex-end;border-top:1px solid var(--line);padding-top:18px}
-.send-submit{border:0;border-radius:12px;padding:13px 20px;font-weight:800;cursor:pointer;background:var(--blue);color:#fff}
-@media(max-width:760px){
-  .send-page{padding:20px 10px 30px}
-  .send-page-head{padding:22px 18px}
-  .send-form{padding:18px}
-  .send-grid{grid-template-columns:1fr}
-  .send-field.full{grid-column:auto}
-  .send-submit{width:100%}
-}
 
 /* ===== CEK TARIF — SATU IMPLEMENTASI POPUP ===== */
 .price-modal{display:none;position:fixed;inset:0;z-index:1000;background:rgba(7,20,55,.62);align-items:center;justify-content:center;padding:18px}
@@ -110,100 +78,11 @@ ay:flex;flex-direction:column}.header{height:74px;background:#fff;border-bottom:
   <div class="brand"><img class="brand-logo" src="https://github.com/rekapinyu/tokoinoya/blob/main/Galery/LOGO%20HEADER%20LACAK%20PAKET.png?raw=true" alt="INOYA SHIPPING"></div>
   <nav class="nav">
     <a href="https://rekapinyu.github.io/tokoinoya/lacakpaket">Traking Paket</a>
-    <a href="#kirim-paket" onclick="openSendPackage(event)">Kirim Paket</a>
+    
     <a href="#cek-harga" onclick="openPriceCheck(event)">Cek Harga Kirim</a>
     <a href="#help">Cara Kirim</a>
   </nav>
 </header>
-
-<section class="send-page" id="sendPackage">
-  <div class="send-page-card">
-    <div class="send-page-head">
-      <div class="eyebrow">International Shipping</div>
-      <h2>Kirim Paket</h2>
-      <p>Isi data pengiriman dengan lengkap untuk membuat nomor resi baru.</p>
-    </div>
-
-    <form class="send-form" id="sendPackageForm" onsubmit="saveSendPackage(event)">
-      <div class="send-section">Data Pengirim</div>
-      <div class="send-grid">
-        <div class="send-field">
-          <label for="sendSender">Nama Pengirim *</label>
-          <input id="sendSender" required placeholder="Nama lengkap / nama usaha">
-        </div>
-        <div class="send-field">
-          <label for="sendPhone">Nomor HP Pengirim *</label>
-          <input id="sendPhone" required inputmode="tel" placeholder="+62 812-xxxx-xxxx">
-        </div>
-      </div>
-
-      <div class="send-section">Data Penerima</div>
-      <div class="send-grid">
-        <div class="send-field">
-          <label for="sendReceiver">Nama Penerima *</label>
-          <input id="sendReceiver" required placeholder="Nama lengkap penerima">
-        </div>
-        <div class="send-field">
-          <label for="sendCountry">Negara Tujuan *</label>
-          <input id="sendCountry" required placeholder="Contoh: Jepang">
-        </div>
-        <div class="send-field">
-          <label for="sendAddress">Alamat Lengkap *</label>
-          <input id="sendAddress" required placeholder="Alamat penerima">
-        </div>
-        <div class="send-field">
-          <label for="sendCity">Kota / Kode Pos *</label>
-          <input id="sendCity" required placeholder="Contoh: Tokyo 150-0001">
-        </div>
-      </div>
-
-      <div class="send-section">Detail Paket</div>
-      <div class="send-grid">
-        <div class="send-field">
-          <label for="sendType">Jenis Paket *</label>
-          <select id="sendType" required>
-            <option value="">Pilih jenis paket</option>
-            <option>Dokumen</option>
-            <option>Barang</option>
-            <option>Elektronik</option>
-            <option>Fashion</option>
-            <option>Makanan</option>
-            <option>Sample Produk</option>
-            <option>Lainnya</option>
-          </select>
-        </div>
-        <div class="send-field">
-          <label for="sendWeight">Berat (kg) *</label>
-          <input id="sendWeight" required type="number" min="0.01" step="0.01" placeholder="Contoh: 2.5">
-        </div>
-        <div class="send-field">
-          <label for="sendService">Layanan Pengiriman *</label>
-          <select id="sendService" required>
-            <option value="">Pilih layanan</option>
-            <option>Express International</option>
-            <option>Priority Cargo</option>
-            <option>Economy International</option>
-          </select>
-        </div>
-        <div class="send-field">
-          <label for="sendValue">Nilai Barang (Rp) * · Otomatis</label>
-          <input id="sendValue" required type="text" inputmode="numeric" readonly tabindex="-1" aria-readonly="true" placeholder="Otomatis dari berat">
-        </div>
-        <div class="send-field full">
-          <label for="sendDescription">Deskripsi / Isi Paket *</label>
-          <textarea id="sendDescription" required placeholder="Jelaskan isi paket secara singkat"></textarea>
-        </div>
-      </div>
-
-      <div class="send-note">Setelah disimpan, nomor resi dibuat otomatis dan data dapat langsung dilacak.</div>
-
-      <div class="send-actions">
-        <button class="send-submit" type="submit">Buat Pengiriman & Resi</button>
-      </div>
-    </form>
-  </div>
-</section>
-
 
 <div class="price-modal" id="priceCheckModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="priceModalTitle">
   <div class="price-modal-card" role="document">
@@ -279,7 +158,7 @@ ay:flex;flex-direction:column}.header{height:74px;background:#fff;border-bottom:
     <div class="home-kicker">International Shipping</div>
     <h1>Menyambung Kebahagiaan<br>dari Indonesia ke Dunia</h1>
     <p>Kirim paket internasional dengan mudah, cek tarif pengiriman, dan lacak perjalanan paketmu dalam satu tempat.</p>
-    <button class="home-cta" type="button" onclick="openSendPackage(event)">Mulai Kirim Paket</button>
+    
   </div>
 
   <div class="home-tools">
@@ -460,8 +339,6 @@ function trackPackage(){
 }
 
 
-/* ===== KIRIM PAKET — SATU IMPLEMENTASI ===== */
-
 /* ===== CEK TARIF — SATU IMPLEMENTASI POPUP ===== */
 const PRICE_COUNTRY_CODES=[
   'AD','AE','AF','AG','AI','AL','AM','AO','AR','AS','AT','AU','AW','AX','AZ',
@@ -612,112 +489,6 @@ document.addEventListener('keydown',e=>{
 buildPriceCountryOptions();
 calculatePriceCheck();
 
-
-function openSendPackage(e){
-  if(e)e.preventDefault();
-  document.getElementById('trackingView').style.display='none';
-  const pricePage=document.getElementById('priceCheckPage');
-  if(pricePage)pricePage.classList.remove('show');
-  document.getElementById('sendPackage').classList.add('show');
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-
-function closeSendPackage(){
-  document.getElementById('sendPackage').classList.remove('show');
-  document.getElementById('trackingView').style.display='';
-}
-
-function generateResi(){
-  const now=new Date();
-  const y=now.getFullYear();
-  const m=String(now.getMonth()+1).padStart(2,'0');
-  const d=String(now.getDate()).padStart(2,'0');
-  const prefix='SF'+y+m+d;
-  const shipments=getShipments();
-  let max=0;
-
-  shipments.forEach(x=>{
-    const id=String(x.id||'');
-    if(id.startsWith(prefix)){
-      const n=parseInt(id.slice(prefix.length),10);
-      if(Number.isFinite(n))max=Math.max(max,n);
-    }
-  });
-
-  return prefix+String(max+1).padStart(3,'0');
-}
-
-function calculateSendPrice(weight){
-  const w=Number(weight||0);
-  if(!Number.isFinite(w)||w<=0)return 0;
-
-  // Tarif dasar pengiriman per kg pada form Kirim Paket.
-  const PRICE_PER_KG=100000;
-  return Math.ceil(w*PRICE_PER_KG);
-}
-
-function updateSendPriceFromWeight(){
-  const weight=document.getElementById('sendWeight');
-  const value=document.getElementById('sendValue');
-  const price=calculateSendPrice(weight.value);
-
-  value.value=price>0?String(price):'';
-}
-
-document.getElementById('sendWeight').addEventListener('input',updateSendPriceFromWeight);
-
-function saveSendPackage(e){
-  e.preventDefault();
-
-  updateSendPriceFromWeight();
-
-  const now=new Date();
-  const calculatedPrice=calculateSendPrice(document.getElementById('sendWeight').value);
-  const shipment={
-    id:generateResi(),
-    sender:document.getElementById('sendSender').value.trim(),
-    phone:document.getElementById('sendPhone').value.trim(),
-    receiver:document.getElementById('sendReceiver').value.trim(),
-    country:document.getElementById('sendCountry').value.trim(),
-    address:document.getElementById('sendAddress').value.trim(),
-    city:document.getElementById('sendCity').value.trim(),
-    type:document.getElementById('sendType').value,
-    weight:Number(document.getElementById('sendWeight').value),
-    service:document.getElementById('sendService').value,
-    value:calculatedPrice,
-    status:'Processing',
-    price:calculatedPrice,
-    date:now.toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'}),
-    description:document.getElementById('sendDescription').value.trim()
-  };
-
-  let shipments=getShipments();
-  if(shipments===demoFallback)shipments=[];
-  else shipments=Array.isArray(shipments)?shipments:[];
-
-  shipments.push(shipment);
-
-  try{
-    localStorage.setItem(STORAGE_KEY,JSON.stringify(shipments));
-  }catch(err){
-    showToast('Gagal menyimpan data pengiriman');
-    return;
-  }
-
-  document.getElementById('sendPackageForm').reset();
-  closeSendPackage();
-  document.getElementById('trackingNumber').value=shipment.id;
-  trackPackage();
-  showToast('Pengiriman berhasil dibuat · Resi '+shipment.id);
-}
-
-function showToast(message){
-  const toast=document.getElementById('toast');
-  toast.textContent=message;
-  toast.classList.add('show');
-  clearTimeout(window.__sendToastTimer);
-  window.__sendToastTimer=setTimeout(()=>toast.classList.remove('show'),3200);
-}
 
 document.getElementById('priceFrom').addEventListener('change',calculatePriceCheck);
 document.getElementById('priceTo').addEventListener('change',calculatePriceCheck);
