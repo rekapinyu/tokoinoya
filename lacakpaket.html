@@ -69,14 +69,14 @@ ay:flex;flex-direction:column}.header{height:74px;background:#fff;border-bottom:
   .send-submit{width:100%}
 }
 
-/* ===== CEK HARGA KIRIM — SATU IMPLEMENTASI ===== */
-.price-page{display:none;width:100%;padding:26px 20px 40px;background:var(--bg)}
-.price-page.show{display:block}
-.price-page-card{width:min(1000px,100%);margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:0 8px 28px rgba(34,48,80,.06);overflow:hidden}
-.price-page-head{padding:26px;border-bottom:1px solid var(--line)}
-.price-page-head .eyebrow{color:var(--blue)}
-.price-page-head h2{margin:7px 0 8px;font-size:28px}
-.price-page-head p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+/* ===== CEK TARIF — SATU IMPLEMENTASI POPUP ===== */
+.price-modal{display:none;position:fixed;inset:0;z-index:1000;background:rgba(7,20,55,.62);align-items:center;justify-content:center;padding:18px}
+.price-modal.show{display:flex}
+.price-modal-card{width:min(1000px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:24px;border:1px solid var(--line);box-shadow:0 24px 70px rgba(7,20,55,.3)}
+.price-modal-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:24px 26px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff;z-index:2}
+.price-modal-title .eyebrow{color:var(--blue)}
+.price-modal-title h2{margin:7px 0 0;font-size:27px}
+.price-modal-close{border:0;background:#eef1f7;color:#596275;width:40px;height:40px;border-radius:50%;font-size:24px;line-height:1;cursor:pointer}
 .price-form{padding:24px 26px}
 .price-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .price-field{display:flex;flex-direction:column;gap:7px}
@@ -94,8 +94,9 @@ ay:flex;flex-direction:column}.header{height:74px;background:#fff;border-bottom:
 .price-status span{font-size:12px;line-height:1.55;color:var(--muted)}
 .price-disclaimer{margin-top:14px;color:var(--muted);font-size:11px;line-height:1.5}
 @media(max-width:760px){
-  .price-page{padding:20px 10px 30px}
-  .price-page-head{padding:22px 18px}
+  .price-modal{padding:10px}
+  .price-modal-card{max-height:95vh;border-radius:18px}
+  .price-modal-head{padding:18px}
   .price-form{padding:18px}
   .price-grid,.price-status-grid{grid-template-columns:1fr}
 }
@@ -204,12 +205,14 @@ ay:flex;flex-direction:column}.header{height:74px;background:#fff;border-bottom:
 </section>
 
 
-<section class="price-page" id="priceCheckPage">
-  <div class="price-page-card">
-    <div class="price-page-head">
-      <div class="eyebrow">International Shipping Rate</div>
-      <h2>Cek Harga Kirim</h2>
-      <p>Cek harga paket dari negara mana ke negara mana. Masukkan asal, tujuan, dan berat paket untuk melihat harga otomatis.</p>
+<div class="price-modal" id="priceCheckModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="priceModalTitle">
+  <div class="price-modal-card" role="document">
+    <div class="price-modal-head">
+      <div class="price-modal-title">
+        <div class="eyebrow">International Shipping Rate</div>
+        <h2 id="priceModalTitle">Cek Harga Kirim</h2>
+      </div>
+      <button class="price-modal-close" type="button" onclick="closePriceCheck()" aria-label="Tutup">×</button>
     </div>
 
     <form class="price-form" id="priceCheckForm" onsubmit="return false">
@@ -268,7 +271,7 @@ ay:flex;flex-direction:column}.header{height:74px;background:#fff;border-bottom:
       </div>
     </form>
   </div>
-</section>
+</div>
 
 <div id="trackingView">
 <section class="home-hero" id="tracking">
@@ -459,33 +462,21 @@ function trackPackage(){
 
 /* ===== KIRIM PAKET — SATU IMPLEMENTASI ===== */
 
-/* ===== CEK HARGA KIRIM — SATU IMPLEMENTASI ===== */
+/* ===== CEK TARIF — SATU IMPLEMENTASI POPUP ===== */
 const PRICE_COUNTRY_CODES=[
   'AD','AE','AF','AG','AI','AL','AM','AO','AR','AS','AT','AU','AW','AX','AZ',
   'BA','BB','BD','BE','BF','BG','BH','BI','BJ','BL','BM','BN','BO','BQ','BR','BS','BT','BV','BW','BY','BZ',
   'CA','CC','CD','CF','CG','CH','CI','CK','CL','CM','CN','CO','CR','CU','CV','CW','CX','CY','CZ',
-  'DE','DJ','DK','DM','DO','DZ',
-  'EC','EE','EG','EH','ER','ES','ET',
-  'FI','FJ','FK','FM','FO','FR',
+  'DE','DJ','DK','DM','DO','DZ','EC','EE','EG','EH','ER','ES','ET','FI','FJ','FK','FM','FO','FR',
   'GA','GB','GD','GE','GF','GG','GH','GI','GL','GM','GN','GP','GQ','GR','GS','GT','GU','GW','GY',
-  'HK','HM','HN','HR','HT','HU',
-  'ID','IE','IL','IM','IN','IO','IQ','IR','IS','IT',
-  'JE','JM','JO','JP',
-  'KE','KG','KH','KI','KM','KN','KP','KR','KW','KY','KZ',
-  'LA','LB','LC','LI','LK','LR','LS','LT','LU','LV','LY',
+  'HK','HM','HN','HR','HT','HU','ID','IE','IL','IM','IN','IO','IQ','IR','IS','IT','JE','JM','JO','JP',
+  'KE','KG','KH','KI','KM','KN','KP','KR','KW','KY','KZ','LA','LB','LC','LI','LK','LR','LS','LT','LU','LV','LY',
   'MA','MC','MD','ME','MF','MG','MH','MK','ML','MM','MN','MO','MP','MQ','MR','MS','MT','MU','MV','MW','MX','MY','MZ',
-  'NA','NC','NE','NF','NG','NI','NL','NO','NP','NR','NU','NZ',
-  'OM',
-  'PA','PE','PF','PG','PH','PK','PL','PM','PN','PR','PS','PT','PW','PY',
-  'QA',
-  'RE','RO','RS','RU','RW',
-  'SA','SB','SC','SD','SE','SG','SH','SI','SJ','SK','SL','SM','SN','SO','SR','SS','ST','SV','SX','SY','SZ',
+  'NA','NC','NE','NF','NG','NI','NL','NO','NP','NR','NU','NZ','OM',
+  'PA','PE','PF','PG','PH','PK','PL','PM','PN','PR','PS','PT','PW','PY','QA',
+  'RE','RO','RS','RU','RW','SA','SB','SC','SD','SE','SG','SH','SI','SJ','SK','SL','SM','SN','SO','SR','SS','ST','SV','SX','SY','SZ',
   'TC','TD','TF','TG','TH','TJ','TK','TL','TM','TN','TO','TR','TT','TV','TW','TZ',
-  'UA','UG','UM','US','UY','UZ',
-  'VA','VC','VE','VG','VI','VN','VU',
-  'WF','WS',
-  'YE','YT',
-  'ZA','ZM','ZW'
+  'UA','UG','UM','US','UY','UZ','VA','VC','VE','VG','VI','VN','VU','WF','WS','YE','YT','ZA','ZM','ZW'
 ];
 
 function buildPriceCountryOptions(){
@@ -549,7 +540,6 @@ function calculatePriceCheck(){
   const toRegion=getPriceRegion(to.value);
 
   let factor=1;
-
   if(!sameCountry){
     if(fromRegion===toRegion)factor=1.25;
     else if(fromRegion==='Asia'||toRegion==='Asia')factor=1.5;
@@ -585,18 +575,42 @@ function calculatePriceCheck(){
 function openPriceCheck(e){
   if(e)e.preventDefault();
 
-  document.getElementById('trackingView').style.display='none';
-
-  const sendPage=document.getElementById('sendPackage');
-  if(sendPage)sendPage.classList.remove('show');
-
-  const pricePage=document.getElementById('priceCheckPage');
-  pricePage.classList.add('show');
+  const modal=document.getElementById('priceCheckModal');
+  if(!modal)return;
 
   buildPriceCountryOptions();
   calculatePriceCheck();
-  window.scrollTo({top:0,behavior:'smooth'});
+  modal.classList.add('show');
+  modal.setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+
+  setTimeout(()=>document.getElementById('priceFrom')?.focus(),50);
 }
+
+function closePriceCheck(){
+  const modal=document.getElementById('priceCheckModal');
+  if(!modal)return;
+
+  modal.classList.remove('show');
+  modal.setAttribute('aria-hidden','true');
+  document.body.style.overflow='';
+}
+
+document.getElementById('priceFrom').addEventListener('change',calculatePriceCheck);
+document.getElementById('priceTo').addEventListener('change',calculatePriceCheck);
+document.getElementById('priceWeight').addEventListener('input',calculatePriceCheck);
+document.getElementById('priceType').addEventListener('change',calculatePriceCheck);
+
+document.getElementById('priceCheckModal').addEventListener('click',e=>{
+  if(e.target.id==='priceCheckModal')closePriceCheck();
+});
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape')closePriceCheck();
+});
+
+buildPriceCountryOptions();
+calculatePriceCheck();
 
 
 function openSendPackage(e){
