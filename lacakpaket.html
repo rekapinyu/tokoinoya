@@ -13,14 +13,15 @@ button,input{font:inherit}.page{min-height:100vh}.header{height:74px;background:
 .info-grid{display:grid;grid-template-columns:repeat(4,1fr);padding:18px 22px;gap:15px}.info b{display:block;margin-top:5px;font-size:14px}.info span{font-size:11px;color:var(--muted)}
 .body-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;margin-top:18px}.card{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 8px 28px rgba(34,48,80,.06);padding:22px}.card h3{margin:0 0 18px;font-size:17px}.timeline{border-left:2px solid #dce3ff;margin:5px 0 0 8px;padding-left:24px}.event{position:relative;padding:0 0 25px}.event:last-child{padding-bottom:0}.event:before{content:"";position:absolute;left:-31px;top:2px;width:11px;height:11px;border-radius:50%;background:#c8cfdd;box-shadow:0 0 0 4px #f0f2f7}.event.done:before{background:var(--blue);box-shadow:0 0 0 4px #e9eeff}.event.current:before{background:var(--lime);box-shadow:0 0 0 4px #efffc4}.event b{font-size:14px}.event small{display:block;color:var(--muted);margin-top:4px;line-height:1.5}.route{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:20px}.place{text-align:center;flex:1}.place strong{display:block;font-size:14px}.place small{color:var(--muted);font-size:11px}.plane{width:38px;height:38px;border-radius:50%;background:#e9eeff;color:var(--blue);display:grid;place-items:center}.detail{border-top:1px solid var(--line);padding-top:16px;margin-top:16px}.detail-row{display:flex;justify-content:space-between;gap:15px;padding:8px 0;font-size:13px}.detail-row span:first-child{color:var(--muted)}.empty{background:#fff;border:1px solid var(--line);border-radius:22px;padding:50px 20px;text-align:center;color:var(--muted);box-shadow:0 8px 28px rgba(34,48,80,.05)}.empty .big{font-size:42px;margin-bottom:10px}.footer{text-align:center;color:var(--muted);font-size:11px;padding:30px 20px;border-top:1px solid var(--line);background:#fff}
 
-/* ===== KIRIM PAKET — INPUT FORM ===== */
-.send-modal{display:none;position:fixed;inset:0;background:rgba(17,27,52,.58);z-index:100;align-items:center;justify-content:center;padding:18px}
-.send-modal.show{display:flex}
-.send-box{width:min(900px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:24px;box-shadow:0 24px 70px rgba(20,35,80,.28)}
-.send-head{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:20px 24px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff;z-index:2}
-.send-head h2{margin:0;font-size:21px}
-.send-close{border:0;background:#eef1f7;width:38px;height:38px;border-radius:50%;font-size:22px;cursor:pointer;color:#596275}
-.send-form{padding:22px 24px}
+/* ===== KIRIM PAKET — HALAMAN ===== */
+.send-page{display:none;width:min(1000px,calc(100% - 28px));margin:30px auto 70px}
+.send-page.show{display:block}
+.send-page-card{background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:0 8px 28px rgba(34,48,80,.06);overflow:hidden}
+.send-page-head{padding:28px 26px;border-bottom:1px solid var(--line)}
+.send-page-head .eyebrow{color:var(--blue)}
+.send-page-head h2{margin:7px 0 8px;font-size:28px}
+.send-page-head p{margin:0;color:var(--muted);font-size:13px}
+.send-form{padding:24px 26px}
 .send-section{font-size:13px;font-weight:900;margin:0 0 12px;color:#172033}
 .send-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:22px}
 .send-field{display:flex;flex-direction:column;gap:7px}
@@ -29,22 +30,10 @@ button,input{font:inherit}.page{min-height:100vh}.header{height:74px;background:
 .send-field input,.send-field select,.send-field textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px 13px;outline:none;background:#fff;color:var(--text)}
 .send-field textarea{min-height:82px;resize:vertical}
 .send-field input:focus,.send-field select:focus,.send-field textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px #e9eeff}
-.send-actions{display:flex;justify-content:flex-end;gap:10px;border-top:1px solid var(--line);padding-top:18px}
-.send-actions button{border:0;border-radius:12px;padding:12px 18px;font-weight:800;cursor:pointer}
-.send-cancel{background:#eef1f7;color:#596275}
-.send-submit{background:var(--blue);color:#fff}
 .send-note{font-size:11px;color:var(--muted);margin:-8px 0 18px}
-@media(max-width:760px){
-  .send-modal{padding:10px}
-  .send-box{max-height:95vh;border-radius:18px}
-  .send-head{padding:16px 18px}
-  .send-form{padding:18px}
-  .send-grid{grid-template-columns:1fr}
-  .send-field.full{grid-column:auto}
-  .send-actions{flex-direction:column}
-  .send-actions button{width:100%}
-}
-
+.send-actions{display:flex;justify-content:flex-end;border-top:1px solid var(--line);padding-top:18px}
+.send-submit{border:0;border-radius:12px;padding:13px 20px;font-weight:800;cursor:pointer;background:var(--blue);color:#fff}
+@media(max-width:760px){.send-page{width:min(100% - 20px,1000px);margin:20px auto 50px}.send-page-head{padding:22px 18px}.send-form{padding:18px}.send-grid{grid-template-columns:1fr}.send-field.full{grid-column:auto}.send-submit{width:100%}}
 .toast{position:fixed;right:20px;bottom:20px;background:#172033;color:#fff;padding:13px 17px;border-radius:12px;opacity:0;transform:translateY(10px);transition:.25s;z-index:50}.toast.show{opacity:1;transform:translateY(0)}
 @media(max-width:760px){.header{height:auto;min-height:0;padding:12px 15px 10px;flex-direction:column;align-items:center;justify-content:center;gap:6px}.brand{width:100%;justify-content:center;align-items:center}.brand-logo{width:300px;height:65px;max-height:65px;object-fit:contain;transform:scale(1.2);transform-origin:center center}.nav{width:100%;display:flex;justify-content:center;align-items:center;gap:4px;flex-wrap:wrap}.nav a{font-size:11px;padding:7px 8px;white-space:nowrap}.nav a:not(:last-child){display:block}.hero{padding:50px 18px 95px}.search-row{flex-direction:column}.btn{width:100%}.info-grid{grid-template-columns:1fr 1fr}.body-grid{grid-template-columns:1fr}.top{align-items:flex-start}.resi{font-size:19px}}
 </style>
@@ -84,11 +73,10 @@ button,input{font:inherit}.page{min-height:100vh}.header{height:74px;background:
 
 <div class="toast" id="toast"></div>
 
-<div class="send-modal" id="sendPackageModal" role="dialog" aria-modal="true" aria-labelledby="sendPackageTitle">
-  <div class="send-box">
-    <div class="send-head">
-      <h2 id="sendPackageTitle">Kirim Paket</h2>
-      <button class="send-close" type="button" onclick="closeSendPackage()" aria-label="Tutup">×</button>
+<section class="send-page" id="kirim-paket">
+  <div class="send-page-card">
+    <div class="send-page-head">
+      <div><div class="eyebrow">International Shipping</div><h2 id="sendPackageTitle">Kirim Paket</h2><p>Isi data pengiriman dengan lengkap untuk membuat nomor resi baru.</p></div>
     </div>
 
     <form class="send-form" id="sendPackageForm" onsubmit="saveSendPackage(event)">
@@ -314,94 +302,49 @@ function trackPackage(){
 }
 
 
-/* ===== KIRIM PAKET — INPUT FORM LOGIC ===== */
+/* ===== KIRIM PAKET — HALAMAN LOGIC ===== */
 function openSendPackage(e){
   if(e)e.preventDefault();
-  document.getElementById('sendPackageModal').classList.add('show');
-  document.body.style.overflow='hidden';
-  setTimeout(()=>document.getElementById('sendSender').focus(),50);
+  document.querySelector('.hero').style.display='none';
+  document.querySelector('.search-card').style.display='none';
+  document.querySelector('.container').style.display='none';
+  document.querySelector('.send-page').classList.add('show');
+  window.scrollTo({top:0,behavior:'smooth'});
 }
-
 function closeSendPackage(){
-  document.getElementById('sendPackageModal').classList.remove('show');
-  document.body.style.overflow='';
+  document.querySelector('.send-page').classList.remove('show');
+  document.querySelector('.hero').style.display='';
+  document.querySelector('.search-card').style.display='';
+  document.querySelector('.container').style.display='';
 }
-
 function generateResi(){
-  const now=new Date();
-  const y=now.getFullYear();
-  const m=String(now.getMonth()+1).padStart(2,'0');
-  const d=String(now.getDate()).padStart(2,'0');
-  const prefix='SF'+y+m+d;
-  const shipments=getShipments();
-  let max=0;
-  shipments.forEach(x=>{
-    const id=String(x.id||'');
-    if(id.startsWith(prefix)){
-      const n=parseInt(id.slice(prefix.length),10);
-      if(Number.isFinite(n))max=Math.max(max,n);
-    }
-  });
+  const now=new Date(),y=now.getFullYear(),m=String(now.getMonth()+1).padStart(2,'0'),d=String(now.getDate()).padStart(2,'0'),prefix='SF'+y+m+d;
+  const shipments=getShipments();let max=0;
+  shipments.forEach(x=>{const id=String(x.id||'');if(id.startsWith(prefix)){const n=parseInt(id.slice(prefix.length),10);if(Number.isFinite(n))max=Math.max(max,n)}});
   return prefix+String(max+1).padStart(3,'0');
 }
-
 function saveSendPackage(e){
   e.preventDefault();
-
-  const now=new Date();
-  const shipment={
-    id:generateResi(),
-    sender:document.getElementById('sendSender').value.trim(),
-    phone:document.getElementById('sendPhone').value.trim(),
-    receiver:document.getElementById('sendReceiver').value.trim(),
-    country:document.getElementById('sendCountry').value.trim(),
-    address:document.getElementById('sendAddress').value.trim(),
-    city:document.getElementById('sendCity').value.trim(),
-    type:document.getElementById('sendType').value,
-    weight:Number(document.getElementById('sendWeight').value),
-    service:document.getElementById('sendService').value,
-    value:Number(document.getElementById('sendValue').value),
-    status:'Processing',
-    price:0,
-    date:now.toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'}),
+  const now=new Date(),shipment={
+    id:generateResi(),sender:document.getElementById('sendSender').value.trim(),phone:document.getElementById('sendPhone').value.trim(),
+    receiver:document.getElementById('sendReceiver').value.trim(),country:document.getElementById('sendCountry').value.trim(),
+    address:document.getElementById('sendAddress').value.trim(),city:document.getElementById('sendCity').value.trim(),
+    type:document.getElementById('sendType').value,weight:Number(document.getElementById('sendWeight').value),
+    service:document.getElementById('sendService').value,value:Number(document.getElementById('sendValue').value),
+    status:'Processing',price:0,date:now.toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'}),
     description:document.getElementById('sendDescription').value.trim()
   };
-
-  let shipments=getShipments();
-  if(shipments===demoFallback)shipments=[];
-  else shipments=Array.isArray(shipments)?shipments:[];
+  let shipments=getShipments();if(shipments===demoFallback)shipments=[];else shipments=Array.isArray(shipments)?shipments:[];
   shipments.push(shipment);
-
-  try{
-    localStorage.setItem(STORAGE_KEY,JSON.stringify(shipments));
-  }catch(err){
-    showToast('Gagal menyimpan data pengiriman');
-    return;
-  }
-
+  try{localStorage.setItem(STORAGE_KEY,JSON.stringify(shipments))}catch(err){showToast('Gagal menyimpan data pengiriman');return}
   document.getElementById('sendPackageForm').reset();
-  closeSendPackage();
-  document.getElementById('trackingNumber').value=shipment.id;
-  trackPackage();
+  closeSendPackage();document.getElementById('trackingNumber').value=shipment.id;trackPackage();
   showToast('Pengiriman berhasil dibuat · Resi '+shipment.id);
 }
-
-document.getElementById('sendPackageModal').addEventListener('click',e=>{
-  if(e.target.id==='sendPackageModal')closeSendPackage();
-});
-
-document.addEventListener('keydown',e=>{
-  if(e.key==='Escape')closeSendPackage();
-});
-
 function showToast(message){
-  const toast=document.getElementById('toast');
-  toast.textContent=message;
-  toast.classList.add('show');
-  clearTimeout(window.__sendToastTimer);
-  window.__sendToastTimer=setTimeout(()=>toast.classList.remove('show'),3200);
+  const toast=document.getElementById('toast');toast.textContent=message;toast.classList.add('show');
+  clearTimeout(window.__sendToastTimer);window.__sendToastTimer=setTimeout(()=>toast.classList.remove('show'),3200);
 }
-
 
 document.getElementById('trackingNumber').addEventListener('keydown',e=>{
   if(e.key==='Enter')trackPackage();
