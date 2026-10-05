@@ -29,6 +29,7 @@ button,input{font:inherit}.page{min-height:100vh;display:flex;flex-direction:col
 .send-field label{font-size:11px;font-weight:800;color:#596275}
 .send-field input,.send-field select,.send-field textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px 13px;outline:none;background:#fff;color:var(--text)}
 .send-field textarea{min-height:82px;resize:vertical}
+.send-field input[readonly]{background:#f5f7fb;cursor:default;pointer-events:none;color:var(--text)}
 .send-field input:focus,.send-field select:focus,.send-field textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px #e9eeff}
 .send-note{font-size:11px;color:var(--muted);margin:-8px 0 18px}
 .send-actions{display:flex;justify-content:flex-end;border-top:1px solid var(--line);padding-top:18px}
@@ -127,8 +128,8 @@ button,input{font:inherit}.page{min-height:100vh;display:flex;flex-direction:col
           </select>
         </div>
         <div class="send-field">
-          <label for="sendValue">Nilai Barang (Rp) *</label>
-          <input id="sendValue" required type="number" min="0" step="1000" placeholder="Contoh: 1500000">
+          <label for="sendValue">Nilai Barang (Rp) * · Otomatis</label>
+          <input id="sendValue" required type="text" inputmode="numeric" readonly tabindex="-1" aria-readonly="true" placeholder="Otomatis dari berat">
         </div>
         <div class="send-field full">
           <label for="sendDescription">Deskripsi / Isi Paket *</label>
@@ -348,10 +349,32 @@ function generateResi(){
   return prefix+String(max+1).padStart(3,'0');
 }
 
+function calculateSendPrice(weight){
+  const w=Number(weight||0);
+  if(!Number.isFinite(w)||w<=0)return 0;
+
+  // Tarif dasar pengiriman per kg pada form Kirim Paket.
+  const PRICE_PER_KG=100000;
+  return Math.ceil(w*PRICE_PER_KG);
+}
+
+function updateSendPriceFromWeight(){
+  const weight=document.getElementById('sendWeight');
+  const value=document.getElementById('sendValue');
+  const price=calculateSendPrice(weight.value);
+
+  value.value=price>0?String(price):'';
+}
+
+document.getElementById('sendWeight').addEventListener('input',updateSendPriceFromWeight);
+
 function saveSendPackage(e){
   e.preventDefault();
 
+  updateSendPriceFromWeight();
+
   const now=new Date();
+  const calculatedPrice=calculateSendPrice(document.getElementById('sendWeight').value);
   const shipment={
     id:generateResi(),
     sender:document.getElementById('sendSender').value.trim(),
@@ -363,9 +386,9 @@ function saveSendPackage(e){
     type:document.getElementById('sendType').value,
     weight:Number(document.getElementById('sendWeight').value),
     service:document.getElementById('sendService').value,
-    value:Number(document.getElementById('sendValue').value),
+    value:calculatedPrice,
     status:'Processing',
-    price:0,
+    price:calculatedPrice,
     date:now.toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'}),
     description:document.getElementById('sendDescription').value.trim()
   };
