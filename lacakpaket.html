@@ -12,6 +12,39 @@ button,input{font:inherit}.page{min-height:100vh}.header{height:74px;background:
 .container{width:min(1100px,calc(100% - 28px));margin:25px auto 70px}.result{display:none}.result.show{display:block}.top-card{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 8px 28px rgba(34,48,80,.06);overflow:hidden}.top{padding:22px;display:flex;justify-content:space-between;gap:20px;border-bottom:1px solid var(--line)}.label{font-size:11px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.08em}.resi{font-size:23px;font-weight:900;margin-top:5px}.status{padding:8px 12px;border-radius:20px;font-size:11px;font-weight:850;height:max-content}.green{background:#e4faef;color:#16875b}.blue{background:#e9eeff;color:var(--blue)}.orange{background:#fff1d9;color:#b26a00}.red{background:#ffe5e8;color:#c13b47}.gray{background:#eef0f4;color:#6e7685}
 .info-grid{display:grid;grid-template-columns:repeat(4,1fr);padding:18px 22px;gap:15px}.info b{display:block;margin-top:5px;font-size:14px}.info span{font-size:11px;color:var(--muted)}
 .body-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;margin-top:18px}.card{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 8px 28px rgba(34,48,80,.06);padding:22px}.card h3{margin:0 0 18px;font-size:17px}.timeline{border-left:2px solid #dce3ff;margin:5px 0 0 8px;padding-left:24px}.event{position:relative;padding:0 0 25px}.event:last-child{padding-bottom:0}.event:before{content:"";position:absolute;left:-31px;top:2px;width:11px;height:11px;border-radius:50%;background:#c8cfdd;box-shadow:0 0 0 4px #f0f2f7}.event.done:before{background:var(--blue);box-shadow:0 0 0 4px #e9eeff}.event.current:before{background:var(--lime);box-shadow:0 0 0 4px #efffc4}.event b{font-size:14px}.event small{display:block;color:var(--muted);margin-top:4px;line-height:1.5}.route{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:20px}.place{text-align:center;flex:1}.place strong{display:block;font-size:14px}.place small{color:var(--muted);font-size:11px}.plane{width:38px;height:38px;border-radius:50%;background:#e9eeff;color:var(--blue);display:grid;place-items:center}.detail{border-top:1px solid var(--line);padding-top:16px;margin-top:16px}.detail-row{display:flex;justify-content:space-between;gap:15px;padding:8px 0;font-size:13px}.detail-row span:first-child{color:var(--muted)}.empty{background:#fff;border:1px solid var(--line);border-radius:22px;padding:50px 20px;text-align:center;color:var(--muted);box-shadow:0 8px 28px rgba(34,48,80,.05)}.empty .big{font-size:42px;margin-bottom:10px}.footer{text-align:center;color:var(--muted);font-size:11px;padding:30px 20px;border-top:1px solid var(--line);background:#fff}
+
+/* ===== KIRIM PAKET — INPUT FORM ===== */
+.send-modal{display:none;position:fixed;inset:0;background:rgba(17,27,52,.58);z-index:100;align-items:center;justify-content:center;padding:18px}
+.send-modal.show{display:flex}
+.send-box{width:min(900px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:24px;box-shadow:0 24px 70px rgba(20,35,80,.28)}
+.send-head{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:20px 24px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff;z-index:2}
+.send-head h2{margin:0;font-size:21px}
+.send-close{border:0;background:#eef1f7;width:38px;height:38px;border-radius:50%;font-size:22px;cursor:pointer;color:#596275}
+.send-form{padding:22px 24px}
+.send-section{font-size:13px;font-weight:900;margin:0 0 12px;color:#172033}
+.send-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:22px}
+.send-field{display:flex;flex-direction:column;gap:7px}
+.send-field.full{grid-column:1/-1}
+.send-field label{font-size:11px;font-weight:800;color:#596275}
+.send-field input,.send-field select,.send-field textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px 13px;outline:none;background:#fff;color:var(--text)}
+.send-field textarea{min-height:82px;resize:vertical}
+.send-field input:focus,.send-field select:focus,.send-field textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px #e9eeff}
+.send-actions{display:flex;justify-content:flex-end;gap:10px;border-top:1px solid var(--line);padding-top:18px}
+.send-actions button{border:0;border-radius:12px;padding:12px 18px;font-weight:800;cursor:pointer}
+.send-cancel{background:#eef1f7;color:#596275}
+.send-submit{background:var(--blue);color:#fff}
+.send-note{font-size:11px;color:var(--muted);margin:-8px 0 18px}
+@media(max-width:760px){
+  .send-modal{padding:10px}
+  .send-box{max-height:95vh;border-radius:18px}
+  .send-head{padding:16px 18px}
+  .send-form{padding:18px}
+  .send-grid{grid-template-columns:1fr}
+  .send-field.full{grid-column:auto}
+  .send-actions{flex-direction:column}
+  .send-actions button{width:100%}
+}
+
 .toast{position:fixed;right:20px;bottom:20px;background:#172033;color:#fff;padding:13px 17px;border-radius:12px;opacity:0;transform:translateY(10px);transition:.25s;z-index:50}.toast.show{opacity:1;transform:translateY(0)}
 @media(max-width:760px){.header{height:auto;min-height:0;padding:12px 15px 10px;flex-direction:column;align-items:center;justify-content:center;gap:6px}.brand{width:100%;justify-content:center;align-items:center}.brand-logo{width:300px;height:65px;max-height:65px;object-fit:contain;transform:scale(1.2);transform-origin:center center}.nav{width:100%;display:flex;justify-content:center;align-items:center;gap:4px;flex-wrap:wrap}.nav a{font-size:11px;padding:7px 8px;white-space:nowrap}.nav a:not(:last-child){display:block}.hero{padding:50px 18px 95px}.search-row{flex-direction:column}.btn{width:100%}.info-grid{grid-template-columns:1fr 1fr}.body-grid{grid-template-columns:1fr}.top{align-items:flex-start}.resi{font-size:19px}}
 </style>
@@ -22,7 +55,7 @@ button,input{font:inherit}.page{min-height:100vh}.header{height:74px;background:
   <div class="brand"><img class="brand-logo" src="https://github.com/rekapinyu/tokoinoya/blob/main/Galery/LOGO%20HEADER%20LACAK.gif?raw=true" alt="INOYA SHIPPING"></div>
   <nav class="nav">
     <a href="https://rekapinyu.github.io/tokoinoya/lacakpaket">Traking Paket</a>
-    <a href="#tracking">Kirim Paket</a>
+    <a href="#kirim-paket" onclick="openSendPackage(event)">Kirim Paket</a>
     <a href="#help">Cek Harga Kirim</a>
     <a href="#help">Cara Kirim</a>
   </nav>
@@ -50,6 +83,95 @@ button,input{font:inherit}.page{min-height:100vh}.header{height:74px;background:
 </div>
 
 <div class="toast" id="toast"></div>
+
+<div class="send-modal" id="sendPackageModal" role="dialog" aria-modal="true" aria-labelledby="sendPackageTitle">
+  <div class="send-box">
+    <div class="send-head">
+      <h2 id="sendPackageTitle">Kirim Paket</h2>
+      <button class="send-close" type="button" onclick="closeSendPackage()" aria-label="Tutup">×</button>
+    </div>
+
+    <form class="send-form" id="sendPackageForm" onsubmit="saveSendPackage(event)">
+      <div class="send-section">Data Pengirim</div>
+      <div class="send-grid">
+        <div class="send-field">
+          <label for="sendSender">Nama Pengirim *</label>
+          <input id="sendSender" required placeholder="Nama lengkap / nama usaha">
+        </div>
+        <div class="send-field">
+          <label for="sendPhone">Nomor HP Pengirim *</label>
+          <input id="sendPhone" required inputmode="tel" placeholder="+62 812-xxxx-xxxx">
+        </div>
+      </div>
+
+      <div class="send-section">Data Penerima</div>
+      <div class="send-grid">
+        <div class="send-field">
+          <label for="sendReceiver">Nama Penerima *</label>
+          <input id="sendReceiver" required placeholder="Nama lengkap penerima">
+        </div>
+        <div class="send-field">
+          <label for="sendCountry">Negara Tujuan *</label>
+          <input id="sendCountry" required placeholder="Contoh: Jepang">
+        </div>
+        <div class="send-field">
+          <label for="sendAddress">Alamat Lengkap *</label>
+          <input id="sendAddress" required placeholder="Alamat penerima">
+        </div>
+        <div class="send-field">
+          <label for="sendCity">Kota / Kode Pos *</label>
+          <input id="sendCity" required placeholder="Contoh: Tokyo 150-0001">
+        </div>
+      </div>
+
+      <div class="send-section">Detail Paket</div>
+      <div class="send-grid">
+        <div class="send-field">
+          <label for="sendType">Jenis Paket *</label>
+          <select id="sendType" required>
+            <option value="">Pilih jenis paket</option>
+            <option>Dokumen</option>
+            <option>Barang</option>
+            <option>Elektronik</option>
+            <option>Fashion</option>
+            <option>Makanan</option>
+            <option>Sample Produk</option>
+            <option>Lainnya</option>
+          </select>
+        </div>
+        <div class="send-field">
+          <label for="sendWeight">Berat (kg) *</label>
+          <input id="sendWeight" required type="number" min="0.01" step="0.01" placeholder="Contoh: 2.5">
+        </div>
+        <div class="send-field">
+          <label for="sendService">Layanan Pengiriman *</label>
+          <select id="sendService" required>
+            <option value="">Pilih layanan</option>
+            <option>Express International</option>
+            <option>Priority Cargo</option>
+            <option>Economy International</option>
+          </select>
+        </div>
+        <div class="send-field">
+          <label for="sendValue">Nilai Barang (Rp) *</label>
+          <input id="sendValue" required type="number" min="0" step="1000" placeholder="Contoh: 1500000">
+        </div>
+        <div class="send-field full">
+          <label for="sendDescription">Deskripsi / Isi Paket *</label>
+          <textarea id="sendDescription" required placeholder="Jelaskan isi paket secara singkat"></textarea>
+        </div>
+      </div>
+
+      <div class="send-note">Setelah disimpan, nomor resi dibuat otomatis dan data dapat langsung dilacak dari menu Traking Paket.</div>
+
+      <div class="send-actions">
+        <button class="send-cancel" type="button" onclick="closeSendPackage()">Batal</button>
+        <button class="send-submit" type="submit">Buat Pengiriman & Resi</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 
 <script>
 /*
@@ -190,6 +312,96 @@ function trackPackage(){
   `;
   result.scrollIntoView({behavior:'smooth',block:'start'});
 }
+
+
+/* ===== KIRIM PAKET — INPUT FORM LOGIC ===== */
+function openSendPackage(e){
+  if(e)e.preventDefault();
+  document.getElementById('sendPackageModal').classList.add('show');
+  document.body.style.overflow='hidden';
+  setTimeout(()=>document.getElementById('sendSender').focus(),50);
+}
+
+function closeSendPackage(){
+  document.getElementById('sendPackageModal').classList.remove('show');
+  document.body.style.overflow='';
+}
+
+function generateResi(){
+  const now=new Date();
+  const y=now.getFullYear();
+  const m=String(now.getMonth()+1).padStart(2,'0');
+  const d=String(now.getDate()).padStart(2,'0');
+  const prefix='SF'+y+m+d;
+  const shipments=getShipments();
+  let max=0;
+  shipments.forEach(x=>{
+    const id=String(x.id||'');
+    if(id.startsWith(prefix)){
+      const n=parseInt(id.slice(prefix.length),10);
+      if(Number.isFinite(n))max=Math.max(max,n);
+    }
+  });
+  return prefix+String(max+1).padStart(3,'0');
+}
+
+function saveSendPackage(e){
+  e.preventDefault();
+
+  const now=new Date();
+  const shipment={
+    id:generateResi(),
+    sender:document.getElementById('sendSender').value.trim(),
+    phone:document.getElementById('sendPhone').value.trim(),
+    receiver:document.getElementById('sendReceiver').value.trim(),
+    country:document.getElementById('sendCountry').value.trim(),
+    address:document.getElementById('sendAddress').value.trim(),
+    city:document.getElementById('sendCity').value.trim(),
+    type:document.getElementById('sendType').value,
+    weight:Number(document.getElementById('sendWeight').value),
+    service:document.getElementById('sendService').value,
+    value:Number(document.getElementById('sendValue').value),
+    status:'Processing',
+    price:0,
+    date:now.toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'}),
+    description:document.getElementById('sendDescription').value.trim()
+  };
+
+  let shipments=getShipments();
+  if(shipments===demoFallback)shipments=[];
+  else shipments=Array.isArray(shipments)?shipments:[];
+  shipments.push(shipment);
+
+  try{
+    localStorage.setItem(STORAGE_KEY,JSON.stringify(shipments));
+  }catch(err){
+    showToast('Gagal menyimpan data pengiriman');
+    return;
+  }
+
+  document.getElementById('sendPackageForm').reset();
+  closeSendPackage();
+  document.getElementById('trackingNumber').value=shipment.id;
+  trackPackage();
+  showToast('Pengiriman berhasil dibuat · Resi '+shipment.id);
+}
+
+document.getElementById('sendPackageModal').addEventListener('click',e=>{
+  if(e.target.id==='sendPackageModal')closeSendPackage();
+});
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape')closeSendPackage();
+});
+
+function showToast(message){
+  const toast=document.getElementById('toast');
+  toast.textContent=message;
+  toast.classList.add('show');
+  clearTimeout(window.__sendToastTimer);
+  window.__sendToastTimer=setTimeout(()=>toast.classList.remove('show'),3200);
+}
+
 
 document.getElementById('trackingNumber').addEventListener('keydown',e=>{
   if(e.key==='Enter')trackPackage();
